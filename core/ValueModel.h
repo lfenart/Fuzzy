@@ -8,37 +8,41 @@
 
 #include "Expression.h"
 
-template<class T>
-class ValueModel : public Expression<T> {
-public:
-    ValueModel();
+namespace expression {
 
-    ValueModel(const T &);
+    template<class T>
+    class ValueModel : public expression::Expression<T> {
+    public:
+        ValueModel();
 
-    virtual ~ValueModel() {};
+        ValueModel(const T &);
 
-    T evaluate() const;
+        virtual ~ValueModel() {};
 
-    void setValue(const T &);
+        T evaluate() const;
 
-private:
-    T value;
-};
+        void setValue(const T &);
 
-template<class T>
-ValueModel<T>::ValueModel() {}
+    private:
+        T value;
+    };
 
-template<class T>
-ValueModel<T>::ValueModel(const T &_value): value(_value) {}
+    template<class T>
+    ValueModel<T>::ValueModel() {}
 
-template<class T>
-T ValueModel<T>::evaluate() const {
-    return value;
-}
+    template<class T>
+    ValueModel<T>::ValueModel(const T &_value): value(_value) {}
 
-template<class T>
-void ValueModel<T>::setValue(const T &_value) {
-    value = _value;
+    template<class T>
+    T ValueModel<T>::evaluate() const {
+        return value;
+    }
+
+    template<class T>
+    void ValueModel<T>::setValue(const T &_value) {
+        value = _value;
+    }
+
 }
 
 #endif //FUZZY_VALUEMODEL_H
