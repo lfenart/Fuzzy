@@ -3,4 +3,4 @@ project(fuzzy)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(fuzzy main.cpp core/expression.h)
+add_executable(fuzzy main.cpp core/Expression.h core/ValueModel.h)

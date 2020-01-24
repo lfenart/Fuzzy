@@ -8,7 +8,7 @@
 template<class T>
 class Expression {
 public:
-    T evaluate() = 0;
+    virtual T evaluate() const = 0;
 };
 
 #endif //FUZZY_EXPRESSION_H
