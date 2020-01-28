@@ -1,9 +1,8 @@
-//
-// Created by Lucas Schloesslin on 28/01/2020.
-//
+
 
 #ifndef FUZZY_BINARYEXPRESSION_H
 #define FUZZY_BINARYEXPRESSION_H
+
 
 #include "Expression.h"
 
