@@ -28,6 +28,13 @@ namespace fuzzy {
         virtual T evaluate(core::Expression<T> *expression) const = 0;
     };
 
+    template<class T>
+    class Or : public core::BinaryExpression<T> {
+    };
+
+    template<class T>
+    class Agg : public core::BinaryExpression<T> {
+    };
 
 }
 
