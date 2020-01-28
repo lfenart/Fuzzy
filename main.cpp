@@ -7,6 +7,9 @@
 #include "fuzzy/OrPlus.h"
 #include "fuzzy/AggMax.h"
 #include "fuzzy/AggPlus.h"
+#include "fuzzy/AndMin.h"
+#include "fuzzy/AndMult.h"
+#include "fuzzy/IsTriangle.h"
 
 typedef double num_t;
 
@@ -32,6 +35,15 @@ int main() {
 
     core::BinaryExpressionModel<num_t> binExp(&v1, &v2, &aggPlus);
     std::cout << binExp.evaluate() << std::endl;
+
+    fuzzy::AndMin<num_t> andMin;
+    std::cout << andMin.evaluate(&v1, &v2) << std::endl;
+
+    fuzzy::AndMult<num_t> andMult;
+    std::cout << andMult.evaluate(&v1, &v2) << std::endl;
+
+    fuzzy::IsTriangle<num_t> isTriangle(2.5,5,7.5);
+    std::cout << isTriangle.evaluate(&v2) << std::endl;
 
     return 0;
 }
