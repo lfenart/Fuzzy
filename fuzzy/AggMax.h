@@ -10,7 +10,7 @@
 namespace fuzzy {
 
     template<class T>
-    class AggMax : public Agg<T> {
+    class AggMax : public fuzzy::Agg<T> {
     public:
         T evaluate(core::Expression<T> *, core::Expression<T> *) const;
     };

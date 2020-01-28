@@ -15,7 +15,7 @@ namespace fuzzy {
     };
 
     template<class T>
-    class Agg : core::BinaryExpression<T> {
+    class Agg : public core::BinaryExpression<T> {
     };
 
 }
