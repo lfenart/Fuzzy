@@ -5,22 +5,21 @@
 #ifndef FUZZY_ORPLUS_H
 #define FUZZY_ORPLUS_H
 
+#include "Operators.h"
+
 namespace fuzzy {
 
-#include "../core/Expression.h"
-    #include "../core/BinaryExpression.h"
-    #include "Operators.h"
-
     template<class T>
-    class OrPlus:public fuzzy::Or<T>{
+    class OrPlus : public fuzzy::Or<T> {
     public:
-        virtual T evaluate(core::Expression<T>*, core::Expression<T>*) const;
+        virtual T evaluate(core::Expression<T> *, core::Expression<T> *) const;
     };
 
     template<class T>
-    T OrPlus<T>::evaluate(core::Expression<T> *left, core::Expression<T> *right) const{
-        return left->evaluate()+right->evaluate();
+    T OrPlus<T>::evaluate(core::Expression<T> *left, core::Expression<T> *right) const {
+        return left->evaluate() + right->evaluate();
     }
+
 }
 
 

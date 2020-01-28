@@ -8,13 +8,16 @@
 #include "../core/Expression.h"
 #include "../core/BinaryExpression.h"
 
-namespace fuzzy{
+namespace fuzzy {
 
     template<class T>
-    class Or:public core::BinaryExpression<T>{
-        public:
-        virtual T evaluate(core::Expression<T>*, core::Expression<T>*) const = 0;
+    class Or : public core::BinaryExpression<T> {
     };
+
+    template<class T>
+    class Agg : core::BinaryExpression<T> {
+    };
+
 }
 
 #endif //FUZZY_OPERATORS_H
