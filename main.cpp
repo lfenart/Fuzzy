@@ -2,6 +2,7 @@
 
 #include "core/ValueModel.h"
 #include "core/BinaryExpression.h"
+#include "core/BinaryExpressionModel.h"
 #include "fuzzy/OrMax.h"
 #include "fuzzy/OrPlus.h"
 #include "fuzzy/AggMax.h"
@@ -28,6 +29,9 @@ int main() {
 
     fuzzy::AggPlus<num_t> aggPlus;
     std::cout << aggPlus.evaluate(&v1, &v2) << std::endl;
+
+    core::BinaryExpressionModel<num_t> binExp(&v1, &v2, &aggPlus);
+    std::cout << binExp.evaluate() << std::endl;
 
     return 0;
 }
