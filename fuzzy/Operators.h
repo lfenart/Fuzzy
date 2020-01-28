@@ -36,6 +36,9 @@ namespace fuzzy {
     class Agg : public core::BinaryExpression<T> {
     };
 
+    template<class T>
+    class Not : public core::UnaryExpression<T> {
+    };
 }
 
 
