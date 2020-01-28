@@ -4,7 +4,8 @@
 
 #ifndef FUZZY_ANDMULT_H
 #define FUZZY_ANDMULT_H
-#include "operators.h"
+
+#include "Operators.h"
 #include "../core/Expression.h"
 
 namespace fuzzy {
@@ -26,5 +27,4 @@ namespace fuzzy {
         return leftValue * rightValue;
     }
 }
-
-#endif
+#endif //FUZZY_ANDMULT_H

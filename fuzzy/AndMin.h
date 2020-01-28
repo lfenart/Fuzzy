@@ -2,12 +2,11 @@
 // Created by mac air on 28/01/2020.
 //
 
-#include "../core/Expression.h"
-#include "operators.h"
-
 #ifndef FUZZY_ANDMIN_H
 #define FUZZY_ANDMIN_H
 
+#include "../core/Expression.h"
+#include "Operators.h"
 
 namespace fuzzy {
     template<typename T>
@@ -26,5 +25,4 @@ namespace fuzzy {
         return (l <= r) ? l : r;
     }
 }
-
 #endif //FUZZY_ANDMIN_H
