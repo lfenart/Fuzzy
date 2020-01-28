@@ -17,6 +17,21 @@ namespace fuzzy {
     template<class T>
     class Agg : public core::BinaryExpression<T> {
     };
+    
+    
+    template<typename T>
+    class And : public core::BinaryExpression<T> {
+
+    public:
+        virtual T evaluate(core::Expression<T> *left, core::Expression<T> *right) const = 0;
+    };
+
+    template<typename T>
+    class Is : public core::UnaryExpression<T> {
+
+    public:
+        virtual T evaluate(core::Expression<T> *expression) const = 0;
+    };
 
 }
 
