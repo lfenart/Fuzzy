@@ -8,10 +8,10 @@
 
 #include "Expression.h"
 
-namespace expression {
+namespace core {
 
     template<class T>
-    class ValueModel : public expression::Expression<T> {
+    class ValueModel : public core::Expression<T> {
     public:
         ValueModel();
 

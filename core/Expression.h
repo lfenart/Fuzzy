@@ -5,7 +5,7 @@
 #ifndef FUZZY_EXPRESSION_H
 #define FUZZY_EXPRESSION_H
 
-namespace expression {
+namespace core {
 
     template<class T>
     class Expression {
