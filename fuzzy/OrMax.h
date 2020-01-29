@@ -17,7 +17,10 @@ namespace fuzzy {
 
     template<class T>
     T OrMax<T>::evaluate(core::Expression<T> *left, core::Expression<T> *right) const {
-        return std::max(left->evaluate(), right->evaluate());
+        T l = left->evaluate();
+        T r = right->evaluate();
+
+        return (l >= r)? l : r;
     }
 
 }
