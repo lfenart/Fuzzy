@@ -21,8 +21,6 @@ namespace core {
 
         BinaryExpression <T> *getTarget() const;
 
-        BinaryExpression <T> *getTarget();
-
         void setTarget(BinaryExpression <T> *_target);
     };
 
@@ -34,7 +32,7 @@ namespace core {
     T BinaryShadowExpression<T>::evaluate(Expression <T> *left, Expression <T> *right) const {
 
         if (target == nullptr) {
-            std::cout << "nullptr" << std::endl;
+            throw "target null";
         }
 
         return target->evaluate(left, right);
