@@ -30,10 +30,10 @@ namespace core{
             Expression<T> *newNot(Expression<T>*);
             //Expression<T> *newIs(, Expression<T>*);
 
-            void changeAnd(fuzzy::And<T> anAnd);
-            void changeOr(fuzzy::Or<T> anOr);
-            void changeThen(fuzzy::Then<T> aThen);
-            void changeAgg(fuzzy::Agg<T> anAgg);
+            void changeAnd(fuzzy::And<T> *anAnd);
+            void changeOr(fuzzy::Or<T> *anOr);
+            void changeThen(fuzzy::Then<T> *aThen);
+            void changeAgg(fuzzy::Agg<T> *anAgg);
 
     };
 
@@ -76,22 +76,22 @@ namespace core{
     }
 
     template<class T>
-    void FuzzyFactory<T>::changeAnd(fuzzy::And<T> anAnd){
+    void FuzzyFactory<T>::changeAnd(fuzzy::And<T> *anAnd){
         andShadow.setTarget(anAnd);
     }
 
     template<class T>
-    void FuzzyFactory<T>::changeOr(fuzzy::Or<T> anOr){
+    void FuzzyFactory<T>::changeOr(fuzzy::Or<T> *anOr){
         orShadow.setTarget(anOr);
     }
 
     template<class T>
-    void FuzzyFactory<T>::changeThen(fuzzy::Then<T> aThen){
+    void FuzzyFactory<T>::changeThen(fuzzy::Then<T> *aThen){
         thenShadow.setTarget(aThen);
     }
 
     template<class T>
-    void FuzzyFactory<T>::changeAgg(fuzzy::Agg<T> anAgg){
+    void FuzzyFactory<T>::changeAgg(fuzzy::Agg<T> *anAgg){
         aggShadow.setTarget(anAgg);
     }
 }
