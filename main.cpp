@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cassert>
 
 #include "core/ValueModel.h"
 #include "core/BinaryExpression.h"
@@ -14,12 +15,21 @@
 #include "fuzzy/AndMult.h"
 #include "fuzzy/IsTriangle.h"
 #include "fuzzy/NotMinus1.h"
+#include "fuzzy/IsGaussian.h"
 
 typedef double num_t;
 
+void testIsGaussian() {
+    fuzzy::IsGaussian<num_t> gauss(5, 1);
+    core::ValueModel<num_t> v(3);
+    num_t result = gauss.evaluate(&v);
+    assert (result > 0.13 && result < 0.14);
+}
+
 int main() {
+
     // TODO: rewrite
-    
+
     core::ValueModel<num_t> v1(3);
     std::cout << v1.evaluate() << std::endl;
 
@@ -57,6 +67,8 @@ int main() {
 
     core::ExpressionFactory<num_t> factory;
     factory.hold(factory.newUnary(new fuzzy::NotMinus1<num_t>(), new core::ValueModel<num_t>(10)));
+
+    testIsGaussian();
 
     return 0;
 }
