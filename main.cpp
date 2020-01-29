@@ -47,8 +47,6 @@ int main() {
     fuzzy::AndMult<num_t> andMult;
     std::cout << andMult.evaluate(&v1, &v2) << std::endl;
 
-    fuzzy::IsTriangle<num_t> isTriangle(2.5,5,7.5);
-    std::cout << isTriangle.evaluate(&v2) << std::endl;
 
     return 0;
 }
