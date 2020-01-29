@@ -12,6 +12,7 @@
 #include "fuzzy/AndMin.h"
 #include "fuzzy/AndMult.h"
 #include "fuzzy/IsTriangle.h"
+#include "fuzzy/NotMinus1.h"
 
 typedef double num_t;
 
@@ -22,6 +23,10 @@ int main() {
     core::ValueModel<num_t> v2;
     v2.setValue(5);
     std::cout << v2.evaluate() << std::endl;
+
+    core::ValueModel<num_t> v3;
+    v3.setValue(-1);
+    std::cout << v3.evaluate() << std::endl;
 
     fuzzy::OrMax<num_t> orMax;
     std::cout << orMax.evaluate(&v1, &v2) << std::endl;
@@ -46,6 +51,12 @@ int main() {
 
     fuzzy::AndMult<num_t> andMult;
     std::cout << andMult.evaluate(&v1, &v2) << std::endl;
+
+    fuzzy::NotMinus1<num_t> notMinus1;
+    std::cout << notMinus1.evaluate(&v3) << std::endl;
+
+
+
 
 
     return 0;
