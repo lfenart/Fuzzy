@@ -28,12 +28,15 @@ namespace core{
             Expression<T> *newThen(Expression<T>*, Expression<T>*);
             Expression<T> *newAgg(Expression<T>*, Expression<T>*);
             Expression<T> *newNot(Expression<T>*);
-            //Expression<T> *newIs(, Expression<T>*);
+            Expression<T> *newIs(fuzzy::Is<T>, Expression<T>*);
 
             void changeAnd(fuzzy::And<T> *anAnd);
             void changeOr(fuzzy::Or<T> *anOr);
             void changeThen(fuzzy::Then<T> *aThen);
             void changeAgg(fuzzy::Agg<T> *anAgg);
+            void changeNot(fuzzy::Not<T> *aNot);
+            void changeIs(fuzzy::Is<T> *anIs);
+
 
     };
 
@@ -76,6 +79,12 @@ namespace core{
     }
 
     template<class T>
+    Expression<T> * FuzzyFactory<T>::newIs(fuzzy::Is<T>, Expression<T>*){
+        return nullptr;
+    }
+
+
+    template<class T>
     void FuzzyFactory<T>::changeAnd(fuzzy::And<T> *anAnd){
         andShadow.setTarget(anAnd);
     }
@@ -94,6 +103,17 @@ namespace core{
     void FuzzyFactory<T>::changeAgg(fuzzy::Agg<T> *anAgg){
         aggShadow.setTarget(anAgg);
     }
+/*
+    template<class T>
+    void FuzzyFactory<T>::changeNot(fuzzy::Not<T> *aNot){
+        aggShadow.setTarget(aNot);
+    }
+
+    template<class T>
+    void FuzzyFactory<T>::changeIs(fuzzy::Is<T> *anIs){
+        aggShadow.setTarget(anIs);
+    }
+    */
 }
 
 #endif //FUZZY_FUZZYFACTORY_H
