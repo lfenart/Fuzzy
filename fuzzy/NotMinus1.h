@@ -11,6 +11,7 @@ namespace fuzzy {
     template<class T>
     class NotMinus1 : public fuzzy::Not<T> {
     public:
+        virtual ~NotMinus1() {};
         T evaluate(core::Expression<T> *operand) const override;
     };
 

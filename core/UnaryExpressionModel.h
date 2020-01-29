@@ -10,22 +10,31 @@
 namespace core {
 
     template<class T>
-    class UnaryExpressionModel : public UnaryExpression<T> {
+    class UnaryExpressionModel : public Expression<T> {
     public:
-        UnaryExpressionModel(Expression<T> *, UnaryExpression<T> *);
+        UnaryExpressionModel(UnaryExpression<T> *, Expression<T> *);
+        virtual ~UnaryExpressionModel();
 
         T evaluate() const;
 
         T evaluate(Expression<T> *) const;
 
     private:
-        Expression<T> *expression;
         UnaryExpression<T> *op;
+        Expression<T> *expression;
     };
 
     template<class T>
-    UnaryExpressionModel<T>::UnaryExpressionModel(core::Expression<T> *_expression, core::UnaryExpression<T> *_op):expression(_expression),op(_op)
-    {
+    UnaryExpressionModel<T>::UnaryExpressionModel(UnaryExpression<T> *_op, Expression<T> *_expression)
+            :op(_op), expression(_expression) {
+    }
+
+    template <class T>
+    UnaryExpressionModel<T>::~UnaryExpressionModel() {
+        // ?
+        std::cout << "delete\n";
+        delete op;
+        delete expression;
     }
 
     template<class T>
@@ -33,13 +42,15 @@ namespace core {
         if (expression != nullptr) {
             return evaluate(expression);
         }
+        throw "";
     }
 
     template<class T>
     T UnaryExpressionModel<T>::evaluate(Expression<T> *o) const {
-        if(op != nullptr){
+        if (op != nullptr) {
             return op->evaluate(o);
         }
+        throw "";
     }
 
 }
