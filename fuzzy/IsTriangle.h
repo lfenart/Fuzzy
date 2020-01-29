@@ -6,20 +6,17 @@
 #define FUZZY_ISTRIANGLE_H
 
 #include "Operators.h"
+
 namespace fuzzy {
 
     template<typename T>
     class IsTriangle : public Is<T> {
-
-    private:
-        T min;
-        T mid;
-        T max;
-
     public:
-        explicit IsTriangle(const T &_min, const T &_mid, const T &_max);
+        IsTriangle(const T &_min, const T &_mid, const T &_max);
 
-        T evaluate(core::Expression<T> *expression) const ;
+        virtual ~IsTriangle() {};
+
+        T evaluate(core::Expression<T> *expression) const;
 
         const T &getMin() const;
 
@@ -32,6 +29,11 @@ namespace fuzzy {
         void setMid(const T &_mid);
 
         void setMax(const T &_max);
+
+    private:
+        T min;
+        T mid;
+        T max;
     };
 
     template<typename T>
@@ -40,24 +42,14 @@ namespace fuzzy {
 
     template<typename T>
     T IsTriangle<T>::evaluate(core::Expression<T> *expression) const {
-
-
-
         T value = expression->evaluate();
-
         if (value <= min) {
-
             return 0;
-
         } else if (value >= min && value <= mid) {
-
             return (value - min) / (mid - min);
-
         } else if (value >= mid && value <= max) {
-
             return (max - value) / (max - mid);
         }
-
         return 0;
     }
 

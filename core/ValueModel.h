@@ -11,7 +11,7 @@
 namespace core {
 
     template<class T>
-    class ValueModel : public core::Expression<T> {
+    class ValueModel : public Expression<T> {
     public:
         ValueModel();
 

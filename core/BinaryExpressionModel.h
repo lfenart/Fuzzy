@@ -10,35 +10,48 @@
 namespace core {
 
     template<class T>
-    class BinaryExpressionModel : public BinaryExpression<T> {
+    class BinaryExpressionModel : public Expression<T> {
     public:
-        BinaryExpressionModel(Expression<T> *, Expression<T> *, BinaryExpression<T> *);
+        BinaryExpressionModel(BinaryExpression <T> *, Expression <T> *, Expression <T> *);
+
+        virtual ~BinaryExpressionModel();
 
         T evaluate() const;
 
-        T evaluate(Expression<T> *, Expression<T> *) const;
+        T evaluate(Expression <T> *, Expression <T> *) const;
 
     private:
-        Expression<T> *left;
-        Expression<T> *right;
-        BinaryExpression<T> *op;
+        BinaryExpression <T> *op;
+        Expression <T> *left;
+        Expression <T> *right;
     };
 
     template<class T>
-    BinaryExpressionModel<T>::BinaryExpressionModel(core::Expression<T> *_left, core::Expression<T> *_right,
-                                                    core::BinaryExpression<T> *_op): left(_left), right(_right),
-                                                                                     op(_op) {}
+    BinaryExpressionModel<T>::BinaryExpressionModel(BinaryExpression <T> *_op, Expression <T> *_left,
+                                                    Expression <T> *_right): op(_op), left(_left), right(_right) {}
+
+    template<class T>
+    BinaryExpressionModel<T>::~BinaryExpressionModel() {
+        // ?
+        delete left;
+        delete right;
+        delete op;
+    }
 
     template<class T>
     T BinaryExpressionModel<T>::evaluate() const {
         if (left != nullptr && right != nullptr) {
             return evaluate(left, right);
         }
+        throw "";
     }
 
     template<class T>
-    T BinaryExpressionModel<T>::evaluate(Expression<T> *left, Expression<T> *right) const {
-        return op->evaluate(left, right);
+    T BinaryExpressionModel<T>::evaluate(Expression <T> *l, Expression <T> *r) const {
+        if (op != nullptr) {
+            return op->evaluate(l, r);
+        }
+        throw "";
     }
 
 }
