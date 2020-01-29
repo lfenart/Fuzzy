@@ -15,11 +15,11 @@ namespace core {
         BinaryExpression <T> *target;
 
     public:
-        explicit BinaryShadowExpression(BinaryExpression <T> *_target);
+        BinaryShadowExpression(BinaryExpression <T> *_target);
 
         T evaluate(Expression <T> *left, Expression <T> *right) const ;
 
-        const BinaryExpression <T> *getTarget() const;
+        BinaryExpression <T> *getTarget() const;
 
         BinaryExpression <T> *getTarget();
 
@@ -41,7 +41,7 @@ namespace core {
     }
 
     template<class T>
-    const BinaryExpression <T> *BinaryShadowExpression<T>::getTarget() const {
+    BinaryExpression <T> *BinaryShadowExpression<T>::getTarget() const {
         return target;
     }
 
@@ -50,10 +50,6 @@ namespace core {
         target = _target;
     }
 
-    template<class T>
-    BinaryExpression <T> *BinaryShadowExpression<T>::getTarget() {
-
-        return target;
-    }
+  
 }
 #endif //FUZZY_BINARYSHADOWEXPRESSION_H
