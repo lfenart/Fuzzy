@@ -10,7 +10,7 @@
 namespace core {
 
     template<class T>
-    class BinaryExpressionModel : public Expression<T> {
+    class BinaryExpressionModel : public Expression<T>, public BinaryExpression<T> {
     public:
         BinaryExpressionModel(BinaryExpression <T> *, Expression <T> *, Expression <T> *);
 

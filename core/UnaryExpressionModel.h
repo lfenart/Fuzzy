@@ -10,9 +10,10 @@
 namespace core {
 
     template<class T>
-    class UnaryExpressionModel : public Expression<T> {
+    class UnaryExpressionModel : public Expression<T>, public UnaryExpression<T> {
     public:
         UnaryExpressionModel(UnaryExpression<T> *, Expression<T> *);
+
         virtual ~UnaryExpressionModel();
 
         T evaluate() const;
@@ -29,7 +30,7 @@ namespace core {
             :op(_op), expression(_expression) {
     }
 
-    template <class T>
+    template<class T>
     UnaryExpressionModel<T>::~UnaryExpressionModel() {
         // ?
         std::cout << "delete\n";
