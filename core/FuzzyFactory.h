@@ -55,27 +55,27 @@ namespace core{
 
     template<class T>
     Expression<T>* FuzzyFactory<T>::newAnd(Expression<T>* left, Expression<T>* right){
-        return newBinary(andShadow, left, right);
+        return newBinary(&andShadow, left, right);
     }
 
     template<class T>
     Expression<T>* FuzzyFactory<T>::newOr(Expression<T>* left, Expression<T>* right){
-        return newBinary(orShadow, left, right);
+        return newBinary(&orShadow, left, right);
     }
 
     template<class T>
     Expression<T>* FuzzyFactory<T>::newThen(Expression<T>* left, Expression<T>* right){
-        return newBinary(thenShadow, left, right);
+        return newBinary(&thenShadow, left, right);
     }
 
     template<class T>
     Expression<T>* FuzzyFactory<T>::newAgg(Expression<T>* left, Expression<T>* right){
-        return newBinary(aggShadow, left, right);
+        return newBinary(&aggShadow, left, right);
     }
 
     template<class T>
     Expression<T>* FuzzyFactory<T>::newNot(Expression<T>* expression){
-        return newUnary(notShadow, expression);
+        return newUnary(&notShadow, expression);
     }
 
     template<class T>
