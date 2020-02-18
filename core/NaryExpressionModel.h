@@ -6,53 +6,56 @@
 #define FUZZY_NARYEXPRESSIONMODEL_H
 
 #include <vector>
-#include "NaryExpression.h"
+
 #include "Expression.h"
+#include "NaryExpression.h"
 
 namespace core {
 
-    template<class T>
-    class NaryExpressionModel : public NaryExpression<T>, public Expression<T> {
-    public:
-        NaryExpressionModel(std::vector<NaryExpression<T> *>);
+template <class T>
+class NaryExpressionModel : public NaryExpression<T>, public Expression<T> {
+public:
+    NaryExpressionModel(NaryExpression<T>*, std::vector<Expression<T>*>);
 
-        virtual ~NaryExpressionModel();
+    virtual ~NaryExpressionModel() {};
 
-        T evaluate() const;
+    T evaluate() const;
 
-        T evaluate(const std::vector<Expression<T> *> &) const;
+    T evaluate(const std::vector<Expression<T>*>&) const;
 
-    private:
-        NaryExpression<T> *op;
-        std::vector<Expression<T> *> operands;
-    };
+private:
+    NaryExpression<T>* ope;
+    typename std::vector<Expression<T>*> operands;
+};
 
-    template<class T>
-    NaryExpressionModel<T>::NaryExpressionModel(std::vector<NaryExpression<T> *> _operands): operands(_operands) {}
-
-    template<class T>
-    NaryExpressionModel<T>::~NaryExpressionModel() {
-//        for (typename std::vector<Expression<T> *>::iterator it = operands.begin(); it != operands.end(); it++) {
-//            delete *it;
-//        }
-    }
-
-    template<class T>
-    T NaryExpressionModel<T>::evaluate() const {
-        if (op != nullptr) {
-            return evaluate(operands);
-        }
-        throw "";
-    }
-
-    template<class T>
-    T NaryExpressionModel<T>::evaluate(const std::vector<Expression<T> *> &operands) const {
-        if (operands.size() != 0) {
-            return op->evaluate(operands);
-        }
-        throw "";
-    }
-
+template <class T>
+NaryExpressionModel<T>::NaryExpressionModel(
+    NaryExpression<T>* _ope,
+    std::vector<Expression<T>*> _operands)
+    : ope(_ope)
+    , operands(_operands)
+{
 }
 
-#endif //FUZZY_NARYEXPRESSIONMODEL_H
+template <class T>
+T NaryExpressionModel<T>::evaluate() const
+{
+    if (ope == nullptr) {
+        throw "";
+    }
+    return evaluate(operands);
+}
+
+template <class T>
+T NaryExpressionModel<T>::evaluate(
+    const std::vector<Expression<T>*>& operands) const
+{
+    if (operands.size() == 0) {
+        throw "";
+    }
+    return ope->evaluate(operands);
+}
+
+} // namespace core
+
+#endif // FUZZY_NARYEXPRESSIONMODEL_H

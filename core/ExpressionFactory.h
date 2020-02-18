@@ -7,63 +7,70 @@
 
 #include <vector>
 
-#include "Expression.h"
-#include "UnaryExpression.h"
 #include "BinaryExpression.h"
+#include "BinaryExpressionModel.h"
+#include "Expression.h"
 #include "NaryExpression.h"
 #include "NaryExpressionModel.h"
+#include "UnaryExpression.h"
+#include "UnaryExpressionModel.h"
 
 namespace core {
 
-    template<class T>
-    class ExpressionFactory {
-    public:
-        ExpressionFactory();
+template <class T>
+class ExpressionFactory {
+public:
+    ExpressionFactory();
 
-        virtual ~ExpressionFactory();
+    virtual ~ExpressionFactory();
 
-        Expression<T> *hold(Expression<T> *);
+    Expression<T>* hold(Expression<T>*);
 
-        Expression<T> *newUnary(UnaryExpression<T> *, Expression<T> *);
+    Expression<T>* newUnary(UnaryExpression<T>*, Expression<T>*);
 
-        Expression<T> *newBinary(BinaryExpression<T> *, Expression<T> *, Expression<T> *);
+    Expression<T>* newBinary(BinaryExpression<T>*, Expression<T>*, Expression<T>*);
 
-        Expression<T> *newNary(NaryExpression<T> *, std::vector<Expression<T> *>);
+    Expression<T>* newNary(NaryExpression<T>*, std::vector<Expression<T>*>);
 
-    private:
-        std::vector<Expression<T> *> memory;
-    };
+private:
+    std::vector<Expression<T>*> memory;
+};
 
-    template<class T>
-    ExpressionFactory<T>::ExpressionFactory() {}
+template <class T>
+ExpressionFactory<T>::ExpressionFactory() {}
 
-    template<class T>
-    ExpressionFactory<T>::~ExpressionFactory() {
-        for (typename std::vector<Expression<T> *>::iterator it = memory.begin(); it != memory.end(); it++) {
-            delete *it;
-        }
+template <class T>
+ExpressionFactory<T>::~ExpressionFactory()
+{
+    for (typename std::vector<Expression<T>*>::iterator it = memory.begin(); it != memory.end(); it++) {
+        delete *it;
     }
+}
 
-    template<class T>
-    Expression<T> *ExpressionFactory<T>::hold(Expression<T> *expression) {
-        memory.push_back(expression);
-        return expression;
-    }
+template <class T>
+Expression<T>* ExpressionFactory<T>::hold(Expression<T>* expression)
+{
+    memory.push_back(expression);
+    return expression;
+}
 
-    template<class T>
-    Expression<T> *ExpressionFactory<T>::newUnary(UnaryExpression<T> *ope, Expression<T> *o) {
-        return hold(new UnaryExpressionModel(ope, o));
-    }
+template <class T>
+Expression<T>* ExpressionFactory<T>::newUnary(UnaryExpression<T>* ope, Expression<T>* o)
+{
+    return hold(new UnaryExpressionModel(ope, o));
+}
 
-    template<class T>
-    Expression<T> *ExpressionFactory<T>::newBinary(BinaryExpression<T> *ope, Expression<T> *l, Expression<T> *r) {
-        return hold(new BinaryExpressionModel(ope, l, r));
-    }
+template <class T>
+Expression<T>* ExpressionFactory<T>::newBinary(BinaryExpression<T>* ope, Expression<T>* l, Expression<T>* r)
+{
+    return hold(new BinaryExpressionModel(ope, l, r));
+}
 
-    template<class T>
-    Expression<T> *ExpressionFactory<T>::newNary(NaryExpression<T> *ope, std::vector<Expression<T> *> operands) {
-        return hold(new NaryExpressionModel(ope, operands));
-    }
+template <class T>
+Expression<T>* ExpressionFactory<T>::newNary(NaryExpression<T>* ope, std::vector<Expression<T>*> operands)
+{
+    return hold(new NaryExpressionModel(ope, operands));
+}
 
 }
 

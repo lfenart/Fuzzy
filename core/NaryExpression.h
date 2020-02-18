@@ -5,16 +5,16 @@
 #ifndef FUZZY_NARYEXPRESSION_H
 #define FUZZY_NARYEXPRESSION_H
 
-#include <vector>
 #include "Expression.h"
+#include <vector>
 
 namespace core {
 
-    template<class T>
-    class NaryExpression {
-    public:
-        virtual T evaluate(std::vector<Expression<T> *>) const = 0;
-    };
+template <class T>
+class NaryExpression {
+public:
+    virtual T evaluate(std::vector<Expression<T>*>) const = 0;
+};
 
 }
 

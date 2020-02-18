@@ -9,50 +9,49 @@
 
 namespace core {
 
-    template<class T>
-    class BinaryExpressionModel : public Expression<T>, public BinaryExpression<T> {
-    public:
-        BinaryExpressionModel(BinaryExpression <T> *, Expression <T> *, Expression <T> *);
+template <class T>
+class BinaryExpressionModel : public Expression<T>, public BinaryExpression<T> {
+public:
+    BinaryExpressionModel(BinaryExpression<T>*, Expression<T>*, Expression<T>*);
 
-        virtual ~BinaryExpressionModel();
+    virtual ~BinaryExpressionModel() {};
 
-        T evaluate() const;
+    T evaluate() const;
 
-        T evaluate(Expression <T> *, Expression <T> *) const;
+    T evaluate(Expression<T>*, Expression<T>*) const;
 
-    private:
-        BinaryExpression <T> *op;
-        Expression <T> *left;
-        Expression <T> *right;
-    };
+private:
+    BinaryExpression<T>* op;
+    Expression<T>* left;
+    Expression<T>* right;
+};
 
-    template<class T>
-    BinaryExpressionModel<T>::BinaryExpressionModel(BinaryExpression <T> *_op, Expression <T> *_left,
-                                                    Expression <T> *_right): op(_op), left(_left), right(_right) {}
+template <class T>
+BinaryExpressionModel<T>::BinaryExpressionModel(BinaryExpression<T>* _op, Expression<T>* _left,
+    Expression<T>* _right)
+    : op(_op)
+    , left(_left)
+    , right(_right)
+{
+}
 
-    template<class T>
-    BinaryExpressionModel<T>::~BinaryExpressionModel() {
-        // ?
-        delete left;
-        delete right;
-        delete op;
+template <class T>
+T BinaryExpressionModel<T>::evaluate() const
+{
+    if (left != nullptr && right != nullptr) {
+        return evaluate(left, right);
     }
+    throw "";
+}
 
-    template<class T>
-    T BinaryExpressionModel<T>::evaluate() const {
-        if (left != nullptr && right != nullptr) {
-            return evaluate(left, right);
-        }
-        throw "";
+template <class T>
+T BinaryExpressionModel<T>::evaluate(Expression<T>* l, Expression<T>* r) const
+{
+    if (op != nullptr) {
+        return op->evaluate(l, r);
     }
-
-    template<class T>
-    T BinaryExpressionModel<T>::evaluate(Expression <T> *l, Expression <T> *r) const {
-        if (op != nullptr) {
-            return op->evaluate(l, r);
-        }
-        throw "";
-    }
+    throw "";
+}
 
 }
 

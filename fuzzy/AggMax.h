@@ -9,19 +9,20 @@
 
 namespace fuzzy {
 
-    template<class T>
-    class AggMax : public fuzzy::Agg<T> {
-    public:
-        T evaluate(core::Expression<T> *, core::Expression<T> *) const;
-    };
+template <class T>
+class AggMax : public fuzzy::Agg<T> {
+public:
+    T evaluate(core::Expression<T>*, core::Expression<T>*) const;
+};
 
-    template<class T>
-    T AggMax<T>::evaluate(core::Expression<T> *left, core::Expression<T> *right) const {
-        T l = left->evaluate();
-        T r = right->evaluate();
+template <class T>
+T AggMax<T>::evaluate(core::Expression<T>* left, core::Expression<T>* right) const
+{
+    T l = left->evaluate();
+    T r = right->evaluate();
 
-        return (l > r) ? l : r;
-    }
+    return (l > r) ? l : r;
+}
 
 }
 
