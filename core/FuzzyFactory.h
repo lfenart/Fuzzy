@@ -5,109 +5,128 @@
 #ifndef FUZZY_FUZZYFACTORY_H
 #define FUZZY_FUZZYFACTORY_H
 
-#include "ExpressionFactory.h"
-#include "Expression.h"
-#include "UnaryExpressionModel.h"
-#include "BinaryShadowExpression.h"
-#include "UnaryShadowExpression.h"
 #include "../fuzzy/Operators.h"
+#include "BinaryShadowExpression.h"
+#include "Expression.h"
+#include "ExpressionFactory.h"
+#include "UnaryExpressionModel.h"
+#include "UnaryShadowExpression.h"
 
-namespace core{
+namespace core {
 
-    template<class T>
-    class FuzzyFactory : public ExpressionFactory<T>{
-        private:
-            BinaryShadowExpression<T> andShadow;
-            BinaryShadowExpression<T> orShadow;
-            BinaryShadowExpression<T> thenShadow;
-            BinaryShadowExpression<T> aggShadow;
-            UnaryShadowExpresssion<T> notShadow;
-        public :
-            FuzzyFactory(BinaryShadowExpression<T>*,BinaryShadowExpression<T>*,BinaryShadowExpression<T>*,BinaryShadowExpression<T>*, UnaryShadowExpresssion<T>*);
-            ~FuzzyFactory();
-            Expression<T> *newAnd(Expression<T>*, Expression<T>*);
-            Expression<T> *newOr(Expression<T>*, Expression<T>*);
-            Expression<T> *newThen(Expression<T>*, Expression<T>*);
-            Expression<T> *newAgg(Expression<T>*, Expression<T>*);
-            Expression<T> *newNot(Expression<T>*);
-            Expression<T> *newIs(fuzzy::Is<T>*, Expression<T>*);
+template <class T>
+class FuzzyFactory : public ExpressionFactory<T> {
+public:
+    FuzzyFactory(fuzzy::And<T>*, fuzzy::Or<T>*, fuzzy::Then<T>*, fuzzy::Agg<T>*, fuzzy::Not<T>*);
 
-            void changeAnd(fuzzy::And<T> *anAnd);
-            void changeOr(fuzzy::Or<T> *anOr);
-            void changeThen(fuzzy::Then<T> *aThen);
-            void changeAgg(fuzzy::Agg<T> *anAgg);
-            void changeNot(fuzzy::Not<T> *aNot);
-    };
+    virtual ~FuzzyFactory() {};
 
-    template<class T>
-    FuzzyFactory<T>::FuzzyFactory(BinaryShadowExpression<T>* _andShadow, BinaryShadowExpression<T>* _orShadow, BinaryShadowExpression<T>* _thenShadow, BinaryShadowExpression<T>* _aggShadow, UnaryShadowExpresssion<T>* _notShadow){
-        andShadow(_andShadow);
-        orShadow(_orShadow);
-        thenShadow(_thenShadow);
-        aggShadow(_aggShadow);
-        notShadow(_notShadow);
-    }
+    Expression<T>* newAnd(Expression<T>*, Expression<T>*);
 
-    template<class T>
-    FuzzyFactory<T>::~FuzzyFactory(){
+    Expression<T>* newOr(Expression<T>*, Expression<T>*);
 
-    }
+    Expression<T>* newThen(Expression<T>*, Expression<T>*);
 
-    template<class T>
-    Expression<T>* FuzzyFactory<T>::newAnd(Expression<T>* left, Expression<T>* right){
-        return newBinary(&andShadow, left, right);
-    }
+    Expression<T>* newAgg(Expression<T>*, Expression<T>*);
 
-    template<class T>
-    Expression<T>* FuzzyFactory<T>::newOr(Expression<T>* left, Expression<T>* right){
-        return newBinary(&orShadow, left, right);
-    }
+    Expression<T>* newNot(Expression<T>*);
 
-    template<class T>
-    Expression<T>* FuzzyFactory<T>::newThen(Expression<T>* left, Expression<T>* right){
-        return newBinary(&thenShadow, left, right);
-    }
+    Expression<T>* newIs(fuzzy::Is<T>*, Expression<T>*);
 
-    template<class T>
-    Expression<T>* FuzzyFactory<T>::newAgg(Expression<T>* left, Expression<T>* right){
-        return newBinary(&aggShadow, left, right);
-    }
+    void changeAnd(fuzzy::And<T>* anAnd);
 
-    template<class T>
-    Expression<T>* FuzzyFactory<T>::newNot(Expression<T>* expression){
-        return newUnary(&notShadow, expression);
-    }
+    void changeOr(fuzzy::Or<T>* anOr);
 
-    template<class T>
-    Expression<T> * FuzzyFactory<T>::newIs(fuzzy::Is<T>* anIs, Expression<T>* expression){
-        return newUnary(anIs, expression);
-    }
+    void changeThen(fuzzy::Then<T>* aThen);
 
+    void changeAgg(fuzzy::Agg<T>* anAgg);
 
-    template<class T>
-    void FuzzyFactory<T>::changeAnd(fuzzy::And<T> *anAnd){
-        andShadow.setTarget(anAnd);
-    }
+    void changeNot(fuzzy::Not<T>* aNot);
 
-    template<class T>
-    void FuzzyFactory<T>::changeOr(fuzzy::Or<T> *anOr){
-        orShadow.setTarget(anOr);
-    }
+private:
+    BinaryShadowExpression<T> andShadow;
+    BinaryShadowExpression<T> orShadow;
+    BinaryShadowExpression<T> thenShadow;
+    BinaryShadowExpression<T> aggShadow;
+    UnaryShadowExpression<T> notShadow;
+};
 
-    template<class T>
-    void FuzzyFactory<T>::changeThen(fuzzy::Then<T> *aThen){
-        thenShadow.setTarget(aThen);
-    }
+template <class T>
+FuzzyFactory<T>::FuzzyFactory(fuzzy::And<T>* _and, fuzzy::Or<T>* _or, fuzzy::Then<T>* _then, fuzzy::Agg<T>* _agg,
+    fuzzy::Not<T>* _not)
+    : andShadow(BinaryShadowExpression<T>(_and))
+    , orShadow(BinaryShadowExpression<T>(_or))
+    , thenShadow(BinaryShadowExpression<T>(_then))
+    , aggShadow(BinaryShadowExpression<T>(_agg))
+    , notShadow(UnaryShadowExpression<T>(_not))
+{
+}
 
-    template<class T>
-    void FuzzyFactory<T>::changeAgg(fuzzy::Agg<T> *anAgg){
-        aggShadow.setTarget(anAgg);
-    }
+template <class T>
+Expression<T>* FuzzyFactory<T>::newAnd(Expression<T>* left, Expression<T>* right)
+{
+    return this->newBinary(&andShadow, left, right);
+}
 
-    template<class T>
-    void FuzzyFactory<T>::changeNot(fuzzy::Not<T> *aNot){
-        notShadow.setTarget(aNot);
-    }
+template <class T>
+Expression<T>* FuzzyFactory<T>::newOr(Expression<T>* left, Expression<T>* right)
+{
+    return this->newBinary(&orShadow, left, right);
+}
+
+template <class T>
+Expression<T>* FuzzyFactory<T>::newThen(Expression<T>* left, Expression<T>* right)
+{
+    return this->newBinary(&thenShadow, left, right);
+}
+
+template <class T>
+Expression<T>* FuzzyFactory<T>::newAgg(Expression<T>* left, Expression<T>* right)
+{
+    return this->newBinary(&aggShadow, left, right);
+}
+
+template <class T>
+Expression<T>* FuzzyFactory<T>::newNot(Expression<T>* expression)
+{
+    return this->newUnary(&notShadow, expression);
+}
+
+template <class T>
+Expression<T>* FuzzyFactory<T>::newIs(fuzzy::Is<T>* anIs, Expression<T>* expression)
+{
+    return this->newUnary(anIs, expression);
+}
+
+template <class T>
+void FuzzyFactory<T>::changeAnd(fuzzy::And<T>* anAnd)
+{
+    andShadow.setTarget(anAnd);
+}
+
+template <class T>
+void FuzzyFactory<T>::changeOr(fuzzy::Or<T>* anOr)
+{
+    orShadow.setTarget(anOr);
+}
+
+template <class T>
+void FuzzyFactory<T>::changeThen(fuzzy::Then<T>* aThen)
+{
+    thenShadow.setTarget(aThen);
+}
+
+template <class T>
+void FuzzyFactory<T>::changeAgg(fuzzy::Agg<T>* anAgg)
+{
+    aggShadow.setTarget(anAgg);
+}
+
+template <class T>
+void FuzzyFactory<T>::changeNot(fuzzy::Not<T>* aNot)
+{
+    notShadow.setTarget(aNot);
+}
 
 }
 
