@@ -5,6 +5,7 @@
 #ifndef FUZZY_NARYEXPRESSION_H
 #define FUZZY_NARYEXPRESSION_H
 
+#include <vector>
 #include "Expression.h"
 
 namespace core {
@@ -12,7 +13,7 @@ namespace core {
     template<class T>
     class NaryExpression {
     public:
-        virtual T evaluate(Expression<T> *, Expression<T> *) const = 0;
+        virtual T evaluate(std::vector<Expression<T> *>) const = 0;
     };
 
 }

@@ -7,11 +7,12 @@
 
 #include <vector>
 #include "NaryExpression.h"
+#include "Expression.h"
 
 namespace core {
 
     template<class T>
-    class NaryExpressionModel {
+    class NaryExpressionModel : public NaryExpression<T>, public Expression<T> {
     public:
         NaryExpressionModel(std::vector<NaryExpression<T> *>);
 
@@ -31,10 +32,9 @@ namespace core {
 
     template<class T>
     NaryExpressionModel<T>::~NaryExpressionModel() {
-        // ?
-        for (typename std::vector<Expression<T> *>::iterator it = operands.begin(); it != operands.end(); it++) {
-            delete *it;
-        }
+//        for (typename std::vector<Expression<T> *>::iterator it = operands.begin(); it != operands.end(); it++) {
+//            delete *it;
+//        }
     }
 
     template<class T>

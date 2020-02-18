@@ -10,6 +10,8 @@
 #include "Expression.h"
 #include "UnaryExpression.h"
 #include "BinaryExpression.h"
+#include "NaryExpression.h"
+#include "NaryExpressionModel.h"
 
 namespace core {
 
@@ -20,15 +22,16 @@ namespace core {
 
         virtual ~ExpressionFactory();
 
-        Expression <T> *hold(Expression <T> *);
+        Expression<T> *hold(Expression<T> *);
 
-        Expression <T> *newUnary(UnaryExpression <T> *, Expression <T> *);
+        Expression<T> *newUnary(UnaryExpression<T> *, Expression<T> *);
 
-        Expression <T> *newBinary(BinaryExpression <T> *, Expression <T> *, Expression <T> *);
+        Expression<T> *newBinary(BinaryExpression<T> *, Expression<T> *, Expression<T> *);
+
+        Expression<T> *newNary(NaryExpression<T> *, std::vector<Expression<T> *>);
 
     private:
-        std::vector<Expression < T> *>
-        memory;
+        std::vector<Expression<T> *> memory;
     };
 
     template<class T>
@@ -42,19 +45,24 @@ namespace core {
     }
 
     template<class T>
-    Expression <T> *ExpressionFactory<T>::hold(Expression <T> *expression) {
+    Expression<T> *ExpressionFactory<T>::hold(Expression<T> *expression) {
         memory.push_back(expression);
         return expression;
     }
 
     template<class T>
-    Expression <T> *ExpressionFactory<T>::newUnary(UnaryExpression <T> *ope, Expression <T> *o) {
-        return new UnaryExpressionModel(ope, o);
+    Expression<T> *ExpressionFactory<T>::newUnary(UnaryExpression<T> *ope, Expression<T> *o) {
+        return hold(new UnaryExpressionModel(ope, o));
     }
 
     template<class T>
-    Expression <T> *ExpressionFactory<T>::newBinary(BinaryExpression <T> *ope, Expression <T> *l, Expression <T> *r) {
-        return new BinaryExpressionModel(ope, l, r);
+    Expression<T> *ExpressionFactory<T>::newBinary(BinaryExpression<T> *ope, Expression<T> *l, Expression<T> *r) {
+        return hold(new BinaryExpressionModel(ope, l, r));
+    }
+
+    template<class T>
+    Expression<T> *ExpressionFactory<T>::newNary(NaryExpression<T> *ope, std::vector<Expression<T> *> operands) {
+        return hold(new NaryExpressionModel(ope, operands));
     }
 
 }
