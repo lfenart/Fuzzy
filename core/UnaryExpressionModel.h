@@ -9,49 +9,46 @@
 
 namespace core {
 
-    template<class T>
-    class UnaryExpressionModel : public Expression<T> {
-    public:
-        UnaryExpressionModel(UnaryExpression<T> *, Expression<T> *);
-        virtual ~UnaryExpressionModel();
+template <class T>
+class UnaryExpressionModel : public Expression<T>, public UnaryExpression<T> {
+public:
+    UnaryExpressionModel(UnaryExpression<T>*, Expression<T>*);
 
-        T evaluate() const;
+    virtual ~UnaryExpressionModel() {};
 
-        T evaluate(Expression<T> *) const;
+    T evaluate() const;
 
-    private:
-        UnaryExpression<T> *op;
-        Expression<T> *expression;
-    };
+    T evaluate(Expression<T>*) const;
 
-    template<class T>
-    UnaryExpressionModel<T>::UnaryExpressionModel(UnaryExpression<T> *_op, Expression<T> *_expression)
-            :op(_op), expression(_expression) {
+private:
+    UnaryExpression<T>* op;
+    Expression<T>* expression;
+};
+
+template <class T>
+UnaryExpressionModel<T>::UnaryExpressionModel(UnaryExpression<T>* _op, Expression<T>* _expression)
+    : op(_op)
+    , expression(_expression)
+{
+}
+
+template <class T>
+T UnaryExpressionModel<T>::evaluate() const
+{
+    if (expression != nullptr) {
+        return evaluate(expression);
     }
+    throw "";
+}
 
-    template <class T>
-    UnaryExpressionModel<T>::~UnaryExpressionModel() {
-        // ?
-        std::cout << "delete\n";
-        delete op;
-        delete expression;
+template <class T>
+T UnaryExpressionModel<T>::evaluate(Expression<T>* o) const
+{
+    if (op != nullptr) {
+        return op->evaluate(o);
     }
-
-    template<class T>
-    T UnaryExpressionModel<T>::evaluate() const {
-        if (expression != nullptr) {
-            return evaluate(expression);
-        }
-        throw "";
-    }
-
-    template<class T>
-    T UnaryExpressionModel<T>::evaluate(Expression<T> *o) const {
-        if (op != nullptr) {
-            return op->evaluate(o);
-        }
-        throw "";
-    }
+    throw "";
+}
 
 }
 

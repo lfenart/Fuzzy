@@ -7,45 +7,51 @@
 
 #include "UnaryExpression.h"
 
-namespace core{
-    template<class T>
-    class UnaryShadowExpresssion : public UnaryExpression<T>{
+namespace core {
+template <class T>
+class UnaryShadowExpression : public UnaryExpression<T> {
 
-    private:
-        UnaryExpression <T> *target;
+private:
+    UnaryExpression<T>* target;
 
-    public:
-        UnaryShadowExpresssion(UnaryExpression <T> *);
+public:
+    UnaryShadowExpression(UnaryExpression<T>*);
 
-        T evaluate(Expression <T> *) const ;
+    T evaluate(Expression<T>*) const;
 
-        UnaryExpression <T> *getTarget() const;
+    UnaryExpression<T>* getTarget() const;
 
-        void setTarget(UnaryExpression <T> *);
-    };
+    void setTarget(UnaryExpression<T>*);
+};
 
-    template<class T>
-    UnaryShadowExpresssion<T>::UnaryShadowExpresssion(UnaryExpression <T> *_target) : target(_target) {
+template <class T>
+UnaryShadowExpression<T>::UnaryShadowExpression(UnaryExpression<T>* _target)
+    : target(_target)
+{
+}
+
+template <class T>
+T UnaryShadowExpression<T>::evaluate(Expression<T>* o) const
+{
+
+    if (target == nullptr) {
+        throw "target null";
     }
 
-    template<class T>
-    T UnaryShadowExpresssion<T>::evaluate(Expression <T> *o) const {
+    return target->evaluate(o);
+}
 
-        if (target == nullptr) {
-            throw "target null";
-        }
+template <class T>
+UnaryExpression<T>* UnaryShadowExpression<T>::getTarget() const
+{
+    return target;
+}
 
-        return target->evaluate(o);
-    }
+template <class T>
+void UnaryShadowExpression<T>::setTarget(UnaryExpression<T>* _target)
+{
+    target = _target;
+}
 
-    template<class T>
-    UnaryExpression <T> *UnaryShadowExpresssion<T>::getTarget() const {
-        return target;
-    }
-
-    template<class T>
-    void UnaryShadowExpresssion<T>::setTarget(UnaryExpression <T> *_target) {
-        target = _target;
-    }
 }
 #endif //FUZZY_UNARYSHADOWEXPRESSION_H
