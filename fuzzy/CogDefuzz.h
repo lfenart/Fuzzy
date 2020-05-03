@@ -18,9 +18,9 @@ namespace fuzzy {
     class CogDefuzz : public MamdaniDefuzz<T> {
 
     public:
-        explicit CogDefuzz(const T &_min, const T &_max, const T &_step);
+        CogDefuzz(const T &_min, const T &_max, const T &_step);
 
-        explicit CogDefuzz();
+        CogDefuzz();
 
         T defuzz(const Shape<T> &shape)  ;
     };
