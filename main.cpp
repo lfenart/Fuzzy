@@ -11,6 +11,10 @@
 #include "fuzzy/IsSigmoid.h"
 #include "fuzzy/IsTriangle.h"
 #include "fuzzy/NotMinus1.h"
+#include "fuzzy/IsGaussian.h"
+#include "fuzzy/IsTrapezoid.h"
+#include "fuzzy/IsTrapezoidLeft.h"
+#include "fuzzy/IsTrapezoidRight.h"
 #include "fuzzy/OrMax.h"
 #include "fuzzy/OrPlus.h"
 #include "fuzzy/ThenMin.h"
@@ -190,6 +194,11 @@ int main()
 
     testNotMinus1(&factory);
 
+
+    core::ValueModel<num_t> v4(3.5);
+    fuzzy::IsTrapezoid<num_t> isTrapezoid(1,2,3,4);
+    std::cout << isTrapezoid.evaluate(&v4) << std::endl;
+  
     testIsGaussian(&factory);
     testIsSigmoid(&factory);
     testIsTriangle(&factory);

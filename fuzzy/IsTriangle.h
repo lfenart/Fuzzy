@@ -9,35 +9,36 @@
 
 namespace fuzzy {
 
-template <typename T>
-class IsTriangle : public Is<T> {
-public:
-    IsTriangle(const T& _min, const T& _mid, const T& _max);
-    virtual ~IsTriangle() {};
+    template<typename T>
+    class IsTriangle : public Is<T> {
+    public:
+        IsTriangle(const T &, const T &, const T &);
 
-    T evaluate(core::Expression<T>* expression) const;
+        virtual ~IsTriangle() {};
 
-    const T& getMin() const;
-    const T& getMid() const;
-    const T& getMax() const;
+        T evaluate(core::Expression<T> *) const;
 
-    void setMin(const T& _min);
-    void setMid(const T& _mid);
-    void setMax(const T& _max);
+        const T &getMin() const;
 
-private:
-    T min;
-    T mid;
-    T max;
-};
+        const T &getMid() const;
 
-template <typename T>
-IsTriangle<T>::IsTriangle(const T& _min, const T& _mid, const T& _max)
-    : min(_min)
-    , mid(_mid)
-    , max(_max)
-{
-}
+        const T &getMax() const;
+
+        void setMin(const T &);
+
+        void setMid(const T &);
+
+        void setMax(const T &);
+
+    private:
+        T min;
+        T mid;
+        T max;
+    };
+
+    template<typename T>
+    IsTriangle<T>::IsTriangle(const T &_min, const T &_mid, const T &_max) : min(_min), mid(_mid), max(_max) {
+    }
 
 template <typename T>
 T IsTriangle<T>::evaluate(core::Expression<T>* expression) const
