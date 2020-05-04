@@ -11,45 +11,27 @@
 #define MAX 10
 #define STEP 1
 
-
 namespace fuzzy {
 
     template<typename T>
     class CogDefuzz : public MamdaniDefuzz<T> {
 
     public:
-        CogDefuzz(const T &_min, const T &_max, const T &_step);
-
-        CogDefuzz();
-
-        T defuzz(const Shape<T> &shape)  ;
+        CogDefuzz(){};
+        ~CogDefuzz(){};
+        virtual T defuzz(typename MamdaniDefuzz<T>::Shape) const;
     };
 
     template<typename T>
-    CogDefuzz<T>::CogDefuzz(const T &_min, const T &_max, const T &_step)
-            : MamdaniDefuzz<T>(_min, _max, _step) {
-    }
-
-    template<typename T>
-    CogDefuzz<T>::CogDefuzz() : CogDefuzz(MIN, MAX, STEP) {
-
-    }
-
-    template<typename T>
-    T CogDefuzz<T>::defuzz(const Shape<T> &shape) {
-        T numerateur(0);
-        T denominateur(0);
-
-        for (auto point : shape) {
-
-            const T &x = point.first;
-            const T &y = point.second;
-
-            numerateur += x * y;
-            denominateur += y;
+    T CogDefuzz<T>::defuzz(typename MamdaniDefuzz<T>::Shape shape) const {
+        T den = 0;
+        T num = 0;
+        for(unsigned int i = 0; i<shape.first.size();i++){
+            num = num + shape.first.at(i) * shape.second.at(i);
+            den = den + shape.second.at(i);
         }
-
-        return (denominateur != 0) ? numerateur / denominateur : 0;
+        if(den == 0) return 0;
+        return num/den;
 
     }
 

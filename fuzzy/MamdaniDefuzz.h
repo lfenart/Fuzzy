@@ -6,31 +6,27 @@
 #define FUZZY_MAMDANIDEFUZZ_H
 
 #include <iostream>
-
-#include "../core/Expression.h"
 #include "../core/ValueModel.h"
-#include "Shape.h"
+#include "../core/BinaryExpression.h"
 
 namespace fuzzy {
 
     template <typename T>
-    class MamdaniDefuzz {
+class MamdaniDefuzz : public core::BinaryExpression<T>{
     public:
         MamdaniDefuzz(const T &, const T &, const T &);
+        ~MamdaniDefuzz(){};
 
-        T evaluate(core::Expression<T> *left, core::Expression<T> *right) const ;
-
-        T defuzz(const Shape <T> &shape) const = 0 ;
+        typedef std::pair<std::vector<T>, std::vector<T>> Shape;
+        virtual T evaluate(core::Expression<T> *left, core::Expression<T> *right) const ;
+        virtual Shape buildShape(core::Expression<T>*, core::Expression<T>*) const;
+        virtual T defuzz(const typename MamdaniDefuzz<T>::Shape&) const = 0 ;
 
         T &getMin() const;
         T &getMax() const;
-
         T &getStep() const;
-
         void setMin(const T &_min);
-
         void setMax(const T &_max);
-
         void setStep(const T &_step);
     private:
         T min;
@@ -39,6 +35,7 @@ namespace fuzzy {
 
 
     };
+
     template<typename T>
     MamdaniDefuzz<T>::MamdaniDefuzz(const T &_min, const T &_max, const T &_step)
             : min(_min), max(_max), step(_step) {
@@ -46,31 +43,18 @@ namespace fuzzy {
 
     template<typename T>
     T MamdaniDefuzz<T>::evaluate(core::Expression<T> *left,core::Expression<T> *right) const {
+        return defuzz(buildShape(left, right));
+    }
 
-        auto valueModel = dynamic_cast<core::ValueModel<T> *>(left);
-        Shape<T> shape;
-        if (valueModel == nullptr) {
-            std::cout << "nullptr mamdani" << std::endl;
-        } else {
-
-            T stateSave = valueModel->evaluate();
-
-
-
-            for (T x = min; x < max; x += step) {
-
-                valueModel->setValue(x);
-
-                T y = right->evaluate();
-
-                shape.addPoint(x, y);
-            }
-
-            valueModel->setValue(stateSave);
-
+    template<typename T>
+    typename MamdaniDefuzz<T>::Shape MamdaniDefuzz<T>::buildShape(core::Expression<T>* in, core::Expression<T>* out) const {
+        std::vector<T> x, y;
+        for (T i= min; i <= max; i += step) {
+            in->setValue(&i);
+            y.push_back(out->evaluate());
+            x.push_back(i);
         }
-
-        return defuzz(shape);
+        return Shape(x,y);
     }
 
     template<typename T>
