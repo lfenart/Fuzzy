@@ -20,6 +20,7 @@ public:
 
     T evaluate(Expression<T>*, Expression<T>*) const;
 
+    BinaryExpression<T>* getOp() const;
 private:
     BinaryExpression<T>* op;
     Expression<T>* left;
@@ -53,6 +54,12 @@ T BinaryExpressionModel<T>::evaluate(Expression<T>* l, Expression<T>* r) const
     throw "";
 }
 
+template <class T>
+BinaryExpression<T>* BinaryExpressionModel<T>::getOp() const {
+    return op;
 }
+
+}
+
 
 #endif //FUZZY_BINARYEXPRESSIONMODEL_H

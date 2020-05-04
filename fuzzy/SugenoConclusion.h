@@ -26,11 +26,11 @@ namespace fuzzy {
     template <typename T>
     T SugenoConclusion<T>::evaluate(std::vector<core::Expression<T>*> operands) const
     {
-        T retValue = 0;
-        for (int i = 0; i < operands.size(); i++){
-            retValue += coeff[i]*(operands[i]->evaluate());
+        unsigned int size = operands.size();
+        T retValue = coeff[size];
+        for (int i = 0; i < size; i++){
+            retValue += coeff[i] * operands[i]->evaluate();
         }
-        retValue += coeff[operands.size()];
         return retValue;
     }
 
