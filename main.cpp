@@ -20,6 +20,7 @@
 #include "fuzzy/SugenoThen.h"
 #include "fuzzy/ThenMin.h"
 #include "fuzzy/ThenMult.h"
+#include "fuzzy/CogDefuzz.h"
 
 #define max(a, b) ((a > b) ? (a) : (b))
 #define min(a, b) ((a < b) ? (a) : (b))
@@ -35,9 +36,130 @@ fuzzy::ThenMult<num_t> thenMult;
 fuzzy::AggMax<num_t> aggMax;
 fuzzy::AggPlus<num_t> aggPlus;
 fuzzy::NotMinus1<num_t> notMinus1;
+fuzzy::CogDefuzz<num_t> opDefuzz;
 fuzzy::IsGaussian<num_t> isGaussian(0.5, 0.1);
 fuzzy::IsSigmoid<num_t> isSigmoid(0.5);
 fuzzy::IsTriangle<num_t> isTriangle(0.2, 0.5, 0.8);
+
+void example(core::FuzzyFactory<num_t>* factory, char* foodVal, char* serviceVal){
+
+    fuzzy::IsTriangle<num_t> poor(-5,0,5);
+    fuzzy::IsTriangle<num_t> good(0,5,10);
+    fuzzy::IsTriangle<num_t> excellent(5,10,15);
+
+    fuzzy::IsTriangle<num_t> cheap(0,5,10);
+    fuzzy::IsTriangle<num_t> average(10,15,20);
+    fuzzy::IsTriangle<num_t> generous(20,25,30);
+
+    fuzzy::IsTriangle<num_t> rancid(-5,0,5);
+    fuzzy::IsTriangle<num_t> delicious(5,10,15);
+
+    core::ValueModel<num_t> service(0);
+    core::ValueModel<num_t> food(0);
+    core::ValueModel<num_t> tips(0);
+    //core::Expression<num_t> *r = factory->newAgg(factory->newAgg(factory->newThen(factory->newIs(&poor,&service),factory->newIs(&cheap,&tips)),factory->newThen(factory->newIs(&good,&service),factory->newIs(&average,&tips))),factory->newThen(factory->newIs(&excellent,&service),factory->newIs(&generous,&tips)));
+    core::Expression<num_t> *r = factory->newAgg(
+            factory->newAgg(
+                    factory->newThen(
+                            factory->newOr(
+                                    factory->newIs(&poor ,&service),
+                                    factory->newIs(&rancid ,&food)
+                            ),
+                            factory->newIs(&cheap, &tips)
+                    )
+                    ,
+                    factory->newThen(
+                            factory->newIs(&good, &service),
+                            factory->newIs(&average, &tips)
+                    )
+            ),
+
+            factory->newThen(
+                    factory->newOr(
+                            factory->newIs(&excellent, &service),
+                            factory->newIs(&delicious, &food)
+                    )
+                    ,
+                    factory->newIs(&generous, &tips)
+            )
+    )
+    ;
+    core::Expression<num_t> *system = factory->newDefuzz(&tips,r,0,25,1);
+
+
+    service.setValue(atof(serviceVal));
+
+    food.setValue(atof(foodVal));
+
+    std::cout<<system->evaluate()<<std::endl;
+    //std::cin.get();
+
+}
+
+void testCogDefuzz(core::FuzzyFactory<num_t>* factory){
+
+    fuzzy::IsTriangle<num_t> poor(-5,0,5);
+    fuzzy::IsTriangle<num_t> good(0,5,10);
+    fuzzy::IsTriangle<num_t> excellent(5,10,15);
+
+    fuzzy::IsTriangle<num_t> cheap(0,5,10);
+    fuzzy::IsTriangle<num_t> average(10,15,20);
+    fuzzy::IsTriangle<num_t> generous(20,25,30);
+
+    fuzzy::IsTriangle<num_t> rancid(-5,0,5);
+    fuzzy::IsTriangle<num_t> delicious(5,10,15);
+
+    core::ValueModel<num_t> service(0);
+    core::ValueModel<num_t> food(0);
+    core::ValueModel<num_t> tips(0);
+    //core::Expression<num_t> *r = factory->newAgg(factory->newAgg(factory->newThen(factory->newIs(&poor,&service),factory->newIs(&cheap,&tips)),factory->newThen(factory->newIs(&good,&service),factory->newIs(&average,&tips))),factory->newThen(factory->newIs(&excellent,&service),factory->newIs(&generous,&tips)));
+    core::Expression<num_t> *r = factory->newAgg(
+            factory->newAgg(
+                    factory->newThen(
+                            factory->newOr(
+                                    factory->newIs(&poor ,&service),
+                                    factory->newIs(&rancid ,&food)
+                            ),
+                            factory->newIs(&cheap, &tips)
+                    )
+                    ,
+                    factory->newThen(
+                            factory->newIs(&good, &service),
+                            factory->newIs(&average, &tips)
+                    )
+            ),
+
+            factory->newThen(
+                    factory->newOr(
+                            factory->newIs(&excellent, &service),
+                            factory->newIs(&delicious, &food)
+                    )
+                    ,
+                    factory->newIs(&generous, &tips)
+            )
+    )
+;
+    core::Expression<num_t> *system = factory->newDefuzz(&tips,r,0,25,1);
+
+    double s;
+    while(true){
+        std::cout<<"service : "<<std::endl;
+        std::cin>>s;
+        std::cin.get();
+
+        service.setValue(s);
+        std::cout<<"food : "<<std::endl;
+        std::cin>>s;
+        std::cin.get();
+
+        food.setValue(s);
+
+        std::cout<<"tips->"<<system->evaluate()<<std::endl;
+        //std::cin.get();
+
+    }
+
+}
 
 void testValueModel()
 {
@@ -175,6 +297,7 @@ void testIsTriangle(core::FuzzyFactory<num_t>* factory)
     assert(result > 0.33 && result < 0.34);
 }
 
+
 void sugeno(core::FuzzyFactory<num_t>* factory)
 {
     fuzzy::SugenoThen<num_t> sugenoThen;
@@ -206,7 +329,7 @@ void sugeno(core::FuzzyFactory<num_t>* factory)
 
 int main()
 {
-    core::FuzzyFactory<num_t> factory(&andMin, &orMax, &thenMin, &aggMax, &notMinus1);
+    core::FuzzyFactory<num_t> factory(&notMinus1, &andMin, &orPlus, &thenMult, &aggPlus, &opDefuzz);
 
     testValueModel();
 
@@ -231,6 +354,10 @@ int main()
     testIsGaussian(&factory);
     testIsSigmoid(&factory);
     testIsTriangle(&factory);
+    
+    core::FuzzyFactory<num_t> f(&notMinus1, &andMin, &orMax, &thenMin, &aggPlus, &opDefuzz);
+    //example(&f,argv[2],argv[1]);
+    //testCogDefuzz(&f);
 
     sugeno(&factory);
 

@@ -44,6 +44,12 @@ public:
     virtual ~Not() {};
 };
 
+template <class T>
+class Defuzz : public core::BinaryExpression<T> {
+public:
+    virtual ~Defuzz() {};
+};
+
 }
 
 #endif //FUZZY_OPERATORS_H
