@@ -327,7 +327,7 @@ void sugeno(core::FuzzyFactory<num_t>* factory)
     std::cout << x;
 }
 
-int main()
+int main(int argc, char *argv[])
 {
     core::FuzzyFactory<num_t> factory(&notMinus1, &andMin, &orPlus, &thenMult, &aggPlus, &opDefuzz);
 
