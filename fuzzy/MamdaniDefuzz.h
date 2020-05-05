@@ -8,19 +8,21 @@
 #include <iostream>
 #include "../core/ValueModel.h"
 #include "../core/BinaryExpression.h"
+#include "Operators.h"
 
 namespace fuzzy {
 
     template <typename T>
-class MamdaniDefuzz : public core::BinaryExpression<T>{
+class MamdaniDefuzz : public core::BinaryExpression<T>, public fuzzy::Defuzz<T>{
     public:
         MamdaniDefuzz(const T &, const T &, const T &);
+        MamdaniDefuzz();
         ~MamdaniDefuzz(){};
 
         typedef std::pair<std::vector<T>, std::vector<T>> Shape;
         virtual T evaluate(core::Expression<T> *left, core::Expression<T> *right) const ;
-        virtual Shape buildShape(core::Expression<T>*, core::Expression<T>*) const;
-        virtual T defuzz(const typename MamdaniDefuzz<T>::Shape&) const = 0 ;
+        virtual Shape buildShape(core::ValueModel<T>*, core::Expression<T>*) const;
+        virtual T defuzz(typename MamdaniDefuzz<T>::Shape) const = 0 ;
 
         T &getMin() const;
         T &getMax() const;
@@ -41,16 +43,22 @@ class MamdaniDefuzz : public core::BinaryExpression<T>{
             : min(_min), max(_max), step(_step) {
     }
 
-    template<typename T>
-    T MamdaniDefuzz<T>::evaluate(core::Expression<T> *left,core::Expression<T> *right) const {
-        return defuzz(buildShape(left, right));
+    template<class T>
+    MamdaniDefuzz<T>::MamdaniDefuzz() :
+            min(0),max(25),step(1)
+    {
     }
 
     template<typename T>
-    typename MamdaniDefuzz<T>::Shape MamdaniDefuzz<T>::buildShape(core::Expression<T>* in, core::Expression<T>* out) const {
+    T MamdaniDefuzz<T>::evaluate(core::Expression<T> *left,core::Expression<T> *right) const {
+        return defuzz(buildShape((core::ValueModel<T> *) left, right));
+    }
+
+    template<typename T>
+    typename MamdaniDefuzz<T>::Shape MamdaniDefuzz<T>::buildShape(core::ValueModel<T>* in, core::Expression<T>* out) const {
         std::vector<T> x, y;
         for (T i= min; i <= max; i += step) {
-            in->setValue(&i);
+            in->setValue(i);
             y.push_back(out->evaluate());
             x.push_back(i);
         }

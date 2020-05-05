@@ -2,6 +2,8 @@
 // Created by Lucas Schloesslin on 29/01/2020.
 //
 
+#include "../fuzzy/MamdaniDefuzz.h"
+
 #ifndef FUZZY_FUZZYFACTORY_H
 #define FUZZY_FUZZYFACTORY_H
 
@@ -17,7 +19,7 @@ namespace core {
 template <class T>
 class FuzzyFactory : public ExpressionFactory<T> {
 public:
-    FuzzyFactory(fuzzy::And<T>*, fuzzy::Or<T>*, fuzzy::Then<T>*, fuzzy::Agg<T>*, fuzzy::Not<T>*);
+    FuzzyFactory( fuzzy::Not<T>*, fuzzy::And<T>*, fuzzy::Or<T>*, fuzzy::Then<T>*, fuzzy::Agg<T>*, fuzzy::Defuzz<T>*);
 
     virtual ~FuzzyFactory() {};
 
@@ -33,15 +35,20 @@ public:
 
     Expression<T>* newIs(fuzzy::Is<T>*, Expression<T>*);
 
-    void changeAnd(fuzzy::And<T>* anAnd);
+    Expression<T>* newDefuzz(Expression<T>*, Expression<T>*, const T&, const T&, const T&);
 
-    void changeOr(fuzzy::Or<T>* anOr);
+    void changeAnd(fuzzy::And<T>*);
 
-    void changeThen(fuzzy::Then<T>* aThen);
+    void changeOr(fuzzy::Or<T>*);
 
-    void changeAgg(fuzzy::Agg<T>* anAgg);
+    void changeThen(fuzzy::Then<T>*);
 
-    void changeNot(fuzzy::Not<T>* aNot);
+    void changeAgg(fuzzy::Agg<T>*);
+
+    void changeNot(fuzzy::Not<T>*);
+
+    void changeDefuzz(fuzzy::MamdaniDefuzz<T>*);
+
 
 private:
     BinaryShadowExpression<T> andShadow;
@@ -49,16 +56,17 @@ private:
     BinaryShadowExpression<T> thenShadow;
     BinaryShadowExpression<T> aggShadow;
     UnaryShadowExpression<T> notShadow;
+    BinaryShadowExpression<T> mamdaniShadow;
 };
 
 template <class T>
-FuzzyFactory<T>::FuzzyFactory(fuzzy::And<T>* _and, fuzzy::Or<T>* _or, fuzzy::Then<T>* _then, fuzzy::Agg<T>* _agg,
-    fuzzy::Not<T>* _not)
+FuzzyFactory<T>::FuzzyFactory(fuzzy::Not<T>* _not, fuzzy::And<T>* _and, fuzzy::Or<T>* _or, fuzzy::Then<T>* _then, fuzzy::Agg<T>* _agg, fuzzy::Defuzz<T>* _defuzz)
     : andShadow(BinaryShadowExpression<T>(_and))
     , orShadow(BinaryShadowExpression<T>(_or))
     , thenShadow(BinaryShadowExpression<T>(_then))
     , aggShadow(BinaryShadowExpression<T>(_agg))
     , notShadow(UnaryShadowExpression<T>(_not))
+    , mamdaniShadow(BinaryShadowExpression<T>(_defuzz))
 {
 }
 
@@ -98,6 +106,12 @@ Expression<T>* FuzzyFactory<T>::newIs(fuzzy::Is<T>* anIs, Expression<T>* express
     return this->newUnary(anIs, expression);
 }
 
+template<typename T>
+Expression<T>* FuzzyFactory<T>::newDefuzz(Expression<T>* l, Expression<T>* r, const T& min, const T& max, const T& step)
+{
+    return this->newBinary(&mamdaniShadow, l, r);
+}
+
 template <class T>
 void FuzzyFactory<T>::changeAnd(fuzzy::And<T>* anAnd)
 {
@@ -127,7 +141,11 @@ void FuzzyFactory<T>::changeNot(fuzzy::Not<T>* aNot)
 {
     notShadow.setTarget(aNot);
 }
-
+template <class T>
+void FuzzyFactory<T>::changeDefuzz(fuzzy::MamdaniDefuzz<T>* anMamdaniDefuzz)
+{
+    mamdaniShadow.setTarget(anMamdaniDefuzz);
+}
 }
 
 #endif //FUZZY_FUZZYFACTORY_H

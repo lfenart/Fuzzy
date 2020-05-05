@@ -14,7 +14,7 @@
 namespace fuzzy {
 
     template<typename T>
-    class CogDefuzz : public MamdaniDefuzz<T> {
+class CogDefuzz : public MamdaniDefuzz<T> {
 
     public:
         CogDefuzz(){};
