@@ -1,6 +1,3 @@
-//
-// Created by lfenart on 04/05/2020.
-//
 
 #ifndef FUZZY_SUGENOTHEN_H
 #define FUZZY_SUGENOTHEN_H

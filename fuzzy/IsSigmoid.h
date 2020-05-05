@@ -1,6 +1,3 @@
-//
-// Created by mac air on 05/02/2020.
-//
 
 #ifndef FUZZY_ISSIGMOID_H
 #define FUZZY_ISSIGMOID_H

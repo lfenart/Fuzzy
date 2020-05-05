@@ -1,6 +1,3 @@
-//
-// Created by Khadija Bahrallil on 28/02/2020.
-//
 
 #include "MamdaniDefuzz.h"
 

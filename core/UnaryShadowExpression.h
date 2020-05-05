@@ -1,6 +1,3 @@
-//
-// Created by xavie on 29/01/2020.
-//
 
 #ifndef FUZZY_UNARYSHADOWEXPRESSION_H
 #define FUZZY_UNARYSHADOWEXPRESSION_H

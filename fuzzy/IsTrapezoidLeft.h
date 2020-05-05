@@ -1,6 +1,3 @@
-//
-// Created by xavie on 06/03/2020.
-//
 
 #ifndef FUZZY_ISTRAPEZOIDLEFT_H
 #define FUZZY_ISTRAPEZOIDLEFT_H

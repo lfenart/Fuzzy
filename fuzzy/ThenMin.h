@@ -1,6 +1,3 @@
-//
-// Created by xavie on 28/01/2020.
-//
 
 #ifndef FUZZY_THENMIN_H
 #define FUZZY_THENMIN_H

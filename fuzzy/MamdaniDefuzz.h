@@ -1,6 +1,3 @@
-//
-// Created by Khadija Bahrallil on 26/02/2020.
-//
 
 #ifndef FUZZY_MAMDANIDEFUZZ_H
 #define FUZZY_MAMDANIDEFUZZ_H

@@ -1,6 +1,3 @@
-//
-// Created by mac air on 29/01/2020.
-//
 
 #ifndef FUZZY_BINARYSHADOWEXPRESSION_H
 #define FUZZY_BINARYSHADOWEXPRESSION_H

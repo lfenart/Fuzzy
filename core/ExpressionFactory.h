@@ -1,6 +1,3 @@
-//
-// Created by lucasf on 29/01/2020.
-//
 
 #ifndef FUZZY_EXPRESSIONFACTORY_H
 #define FUZZY_EXPRESSIONFACTORY_H

@@ -1,6 +1,3 @@
-//
-// Created by Lucas Schloesslin on 06/03/2020.
-//
 
 #ifndef FUZZY_SUGENOCONCLUSION_H
 #define FUZZY_SUGENOCONCLUSION_H

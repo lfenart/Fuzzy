@@ -1,6 +1,3 @@
-//
-// Created by mac air on 28/01/2020.
-//
 
 #ifndef FUZZY_OPERATORS_H
 #define FUZZY_OPERATORS_H

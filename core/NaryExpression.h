@@ -1,6 +1,3 @@
-//
-// Created by lucasf on 18/02/2020.
-//
 
 #ifndef FUZZY_NARYEXPRESSION_H
 #define FUZZY_NARYEXPRESSION_H

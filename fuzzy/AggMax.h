@@ -1,6 +1,3 @@
-//
-// Created by lucasf on 28/01/2020.
-//
 
 #ifndef FUZZY_AGGMAX_H
 #define FUZZY_AGGMAX_H

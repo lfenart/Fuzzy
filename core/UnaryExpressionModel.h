@@ -1,6 +1,3 @@
-//
-// Created by Lucas Schloesslin on 28/01/2020.
-//
 
 #ifndef FUZZY_UNARYEXPRESSIONMODEL_H
 #define FUZZY_UNARYEXPRESSIONMODEL_H

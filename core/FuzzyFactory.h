@@ -1,6 +1,3 @@
-//
-// Created by Lucas Schloesslin on 29/01/2020.
-//
 
 #include "../fuzzy/MamdaniDefuzz.h"
 
