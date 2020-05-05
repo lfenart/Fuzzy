@@ -81,6 +81,12 @@ int main(int argc, char** argv)
         } else {
             left1 = f.newAnd(f.newIs(iss[0], &service), f.newIs(iss[3], &food));
         }
+    } else {
+        if (iss[0] != NULL) {
+            left1 = f.newIs(iss[0], &service);
+        } else {
+            left1 = f.newIs(iss[3], &food);
+        }
     }
     if (iss[1] != NULL && iss[4] != NULL) {
         if (strcmp(argv[i + 3], "Or") == 0) {
@@ -88,12 +94,24 @@ int main(int argc, char** argv)
         } else {
             left2 = f.newAnd(f.newIs(iss[1], &service), f.newIs(iss[4], &food));
         }
+    } else {
+        if (iss[1] != NULL) {
+            left2 = f.newIs(iss[1], &service);
+        } else {
+            left2 = f.newIs(iss[4], &food);
+        }
     }
     if (iss[2] != NULL && iss[5] != NULL) {
         if (strcmp(argv[i + 4], "Or") == 0) {
             left3 = f.newOr(f.newIs(iss[2], &service), f.newIs(iss[5], &food));
         } else {
             left3 = f.newAnd(f.newIs(iss[2], &service), f.newIs(iss[5], &food));
+        }
+    } else {
+        if (iss[2] != NULL) {
+            left2 = f.newIs(iss[2], &service);
+        } else {
+            left2 = f.newIs(iss[5], &food);
         }
     }
     core::Expression<num_t>* r = f.newAgg(
