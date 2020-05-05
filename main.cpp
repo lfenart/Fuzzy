@@ -9,10 +9,15 @@
 #include "fuzzy/AndMult.h"
 #include "fuzzy/IsGaussian.h"
 #include "fuzzy/IsSigmoid.h"
+#include "fuzzy/IsTrapezoid.h"
+#include "fuzzy/IsTrapezoidLeft.h"
+#include "fuzzy/IsTrapezoidRight.h"
 #include "fuzzy/IsTriangle.h"
 #include "fuzzy/NotMinus1.h"
 #include "fuzzy/OrMax.h"
 #include "fuzzy/OrPlus.h"
+#include "fuzzy/SugenoDefuzz.h"
+#include "fuzzy/SugenoThen.h"
 #include "fuzzy/ThenMin.h"
 #include "fuzzy/ThenMult.h"
 #include "fuzzy/CogDefuzz.h"
@@ -292,7 +297,37 @@ void testIsTriangle(core::FuzzyFactory<num_t>* factory)
     assert(result > 0.33 && result < 0.34);
 }
 
-int main(int argc, char *argv[])
+
+void sugeno(core::FuzzyFactory<num_t>* factory)
+{
+    fuzzy::SugenoThen<num_t> sugenoThen;
+    factory->changeThen(&sugenoThen);
+    core::ValueModel<num_t> input1(3);
+    core::ValueModel<num_t> input2(8);
+    core::ValueModel<num_t> z1(0.2);
+    core::ValueModel<num_t> z2(0.5);
+    core::ValueModel<num_t> z3(0.8);
+    fuzzy::IsGaussian<num_t> isGaussian1(0, 2);
+    fuzzy::IsGaussian<num_t> isGaussian2(5, 2);
+    fuzzy::IsGaussian<num_t> isGaussian3(10, 2);
+    fuzzy::IsTrapezoidLeft<num_t> isTrapezoid1(1, 3.5);
+    fuzzy::IsTrapezoidRight<num_t> isTrapezoid3(6.5, 9);
+    core::Expression<num_t>* or1 = factory->newOr(factory->newIs(&isGaussian1, &input1), factory->newIs(&isTrapezoid1, &input2));
+    core::Expression<num_t>* is2 = factory->newIs(&isGaussian2, &input1);
+    core::Expression<num_t>* or3 = factory->newOr(factory->newIs(&isGaussian3, &input1), factory->newIs(&isTrapezoid3, &input2));
+    core::Expression<num_t>* then1 = factory->newThen(or1, &z1);
+    core::Expression<num_t>* then2 = factory->newThen(is2, &z2);
+    core::Expression<num_t>* then3 = factory->newThen(or3, &z3);
+    std::vector<core::Expression<num_t>*> vec;
+    vec.push_back(then1);
+    vec.push_back(then2);
+    vec.push_back(then3);
+    fuzzy::SugenoDefuzz<num_t> defuzz;
+    num_t x = defuzz.evaluate(vec);
+    std::cout << x;
+}
+
+int main()
 {
     core::FuzzyFactory<num_t> factory(&notMinus1, &andMin, &orPlus, &thenMult, &aggPlus, &opDefuzz);
 
@@ -312,12 +347,19 @@ int main(int argc, char *argv[])
 
     testNotMinus1(&factory);
 
+    core::ValueModel<num_t> v4(3.5);
+    fuzzy::IsTrapezoid<num_t> isTrapezoid(1, 2, 3, 4);
+    std::cout << isTrapezoid.evaluate(&v4) << std::endl;
+
     testIsGaussian(&factory);
     testIsSigmoid(&factory);
     testIsTriangle(&factory);
     
     core::FuzzyFactory<num_t> f(&notMinus1, &andMin, &orMax, &thenMin, &aggPlus, &opDefuzz);
-    example(&f,argv[2],argv[1]);
+    //example(&f,argv[2],argv[1]);
     //testCogDefuzz(&f);
+
+    sugeno(&factory);
+
     return 0;
 }
