@@ -6,6 +6,7 @@
 #define FUZZY_MAMDANIDEFUZZ_H
 
 #include <iostream>
+#include <vector>
 #include "../core/ValueModel.h"
 #include "../core/BinaryExpression.h"
 #include "Operators.h"
@@ -13,7 +14,7 @@
 namespace fuzzy {
 
     template <typename T>
-class MamdaniDefuzz : public core::BinaryExpression<T>, public fuzzy::Defuzz<T>{
+class MamdaniDefuzz : public fuzzy::Defuzz<T> {
     public:
         MamdaniDefuzz(const T &, const T &, const T &);
         MamdaniDefuzz();
