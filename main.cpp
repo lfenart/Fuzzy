@@ -75,6 +75,7 @@ int main(int argc, char** argv)
             i += 1;
         } else {
             std::cout << "Error" << std::endl;
+            return 1;
         }
     }
     core::ValueModel<num_t> service(strtod(argv[i], NULL));
@@ -134,7 +135,6 @@ int main(int argc, char** argv)
             left3,
             f.newIs(iss[8], &tip)));
     core::Expression<num_t>* system = f.newDefuzz(&tip, r, 0, 25, 1);
-
     std::cout << "tips->" << system->evaluate() << std::endl;
     return 0;
 }
