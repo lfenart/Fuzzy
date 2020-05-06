@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_AGGPLUS_H
 #define FUZZY_AGGPLUS_H
 

@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_EXPRESSIONFACTORY_H
 #define FUZZY_EXPRESSIONFACTORY_H
 
@@ -18,15 +17,12 @@ template <class T>
 class ExpressionFactory {
 public:
     ExpressionFactory();
-
     virtual ~ExpressionFactory();
 
     Expression<T>* hold(Expression<T>*);
 
     Expression<T>* newUnary(UnaryExpression<T>*, Expression<T>*);
-
     Expression<T>* newBinary(BinaryExpression<T>*, Expression<T>*, Expression<T>*);
-
     Expression<T>* newNary(NaryExpression<T>*, std::vector<Expression<T>*>);
 
 private:

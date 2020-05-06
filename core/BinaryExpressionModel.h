@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_BINARYEXPRESSIONMODEL_H
 #define FUZZY_BINARYEXPRESSIONMODEL_H
 
@@ -10,14 +9,13 @@ template <class T>
 class BinaryExpressionModel : public Expression<T>, public BinaryExpression<T> {
 public:
     BinaryExpressionModel(BinaryExpression<T>*, Expression<T>*, Expression<T>*);
-
     virtual ~BinaryExpressionModel() {};
 
     T evaluate() const;
-
     T evaluate(Expression<T>*, Expression<T>*) const;
 
     BinaryExpression<T>* getOp() const;
+
 private:
     BinaryExpression<T>* op;
     Expression<T>* left;
@@ -52,11 +50,11 @@ T BinaryExpressionModel<T>::evaluate(Expression<T>* l, Expression<T>* r) const
 }
 
 template <class T>
-BinaryExpression<T>* BinaryExpressionModel<T>::getOp() const {
+BinaryExpression<T>* BinaryExpressionModel<T>::getOp() const
+{
     return op;
 }
 
 }
-
 
 #endif //FUZZY_BINARYEXPRESSIONMODEL_H

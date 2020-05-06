@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_NARYEXPRESSIONMODEL_H
 #define FUZZY_NARYEXPRESSIONMODEL_H
 
@@ -13,11 +12,9 @@ template <class T>
 class NaryExpressionModel : public NaryExpression<T>, public Expression<T> {
 public:
     NaryExpressionModel(NaryExpression<T>*, std::vector<Expression<T>*>);
-
     virtual ~NaryExpressionModel() {};
 
     T evaluate() const;
-
     T evaluate(const std::vector<Expression<T>*>&) const;
 
 private:

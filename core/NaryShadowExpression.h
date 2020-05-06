@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_NARYSHADOWEXPRESSION_H
 #define FUZZY_NARYSHADOWEXPRESSION_H
 
@@ -12,7 +11,6 @@ template <class T>
 class NaryShadowExpression : public NaryExpression<T> {
 public:
     NaryShadowExpression(NaryExpression<T>*);
-
     virtual ~NaryShadowExpression() {};
 
     T evaluate(std::vector<Expression<T>*>) const;

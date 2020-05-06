@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_THENMULT_H
 #define FUZZY_THENMULT_H
 #include "Operators.h"

@@ -261,136 +261,6 @@ void sugeno(core::FuzzyFactory<num_t>* factory)
     std::cout << x;
 }
 
-void examplePourboire(core::FuzzyFactory<num_t>* factory, fuzzy::Is<num_t>* _poor, fuzzy::Is<num_t>* _good, fuzzy::Is<num_t>* _excellent, fuzzy::Is<num_t>* _rancid, fuzzy::Is<num_t>* _delicious, fuzzy::Is<num_t>* _cheap, fuzzy::Is<num_t>* _average, fuzzy::Is<num_t>* _generous, core::ValueModel<num_t>* service, core::ValueModel<num_t>* food, std::string op1, std::string op3)
-{
-    core::ValueModel<num_t> tips(0);
-    fuzzy::IsTriangle<num_t> cheap(0, 5, 10);
-    fuzzy::IsTriangle<num_t> average(10, 15, 20);
-    fuzzy::IsTriangle<num_t> generous(20, 25, 30);
-    core::Expression<num_t>* r;
-    if (op1 == "And" && op3 == "And") {
-        r = factory->newAgg(
-            factory->newAgg(
-                factory->newThen(
-                    factory->newAnd(
-                        factory->newIs(_poor, service),
-                        factory->newIs(_rancid, food)),
-                    factory->newIs(&cheap, &tips)),
-                factory->newThen(
-                    factory->newIs(_good, service),
-                    factory->newIs(&average, &tips))),
-
-            factory->newThen(
-                factory->newAnd(
-                    factory->newIs(_excellent, service),
-                    factory->newIs(_delicious, food)),
-                factory->newIs(&generous, &tips)));
-    } else if (op1 == "Or" && op3 == "And") {
-        r = factory->newAgg(
-            factory->newAgg(
-                factory->newThen(
-                    factory->newOr(
-                        factory->newIs(_poor, service),
-                        factory->newIs(_rancid, food)),
-                    factory->newIs(&cheap, &tips)),
-                factory->newThen(
-                    factory->newIs(_good, service),
-                    factory->newIs(&average, &tips))),
-
-            factory->newThen(
-                factory->newAnd(
-                    factory->newIs(_excellent, service),
-                    factory->newIs(_delicious, food)),
-                factory->newIs(&generous, &tips)));
-    } else if (op1 == "And" && op3 == "Or") {
-        r = factory->newAgg(
-            factory->newAgg(
-                factory->newThen(
-                    factory->newAnd(
-                        factory->newIs(_poor, service),
-                        factory->newIs(_rancid, food)),
-                    factory->newIs(&cheap, &tips)),
-                factory->newThen(
-                    factory->newIs(_good, service),
-                    factory->newIs(&average, &tips))),
-
-            factory->newThen(
-                factory->newOr(
-                    factory->newIs(_excellent, service),
-                    factory->newIs(_delicious, food)),
-                factory->newIs(&generous, &tips)));
-    } else {
-        r = factory->newAgg(
-            factory->newAgg(
-                factory->newThen(
-                    factory->newOr(
-                        factory->newIs(_poor, service),
-                        factory->newIs(_rancid, food)),
-                    factory->newIs(&cheap, &tips)),
-                factory->newThen(
-                    factory->newIs(_good, service),
-                    factory->newIs(&average, &tips))),
-
-            factory->newThen(
-                factory->newOr(
-                    factory->newIs(_excellent, service),
-                    factory->newIs(_delicious, food)),
-                factory->newIs(&generous, &tips)));
-    }
-
-    core::Expression<num_t>* system = factory->newDefuzz(&tips, r, 0, 25, 1);
-
-    std::cout << "tips->" << system->evaluate() << std::endl;
-}
-
-fuzzy::Is<num_t>* getForm(std::string shape)
-{
-    std::string delimiter = ",";
-    std::string type = shape.substr(0, shape.find(delimiter));
-
-    if (type == "IsGaussian") {
-        shape.erase(0, shape.find(delimiter) + delimiter.length());
-        double mean = atof(shape.substr(0, shape.find(delimiter)).c_str());
-        shape.erase(0, shape.find(delimiter) + delimiter.length());
-        double deviation = atof(shape.substr(0, shape.find(delimiter)).c_str());
-        return new fuzzy::IsGaussian<num_t>(mean, deviation);
-    } else if (type == "IsSigmoid") {
-        double mid = atof(shape.substr(1, shape.find(delimiter)).c_str());
-        return new fuzzy::IsSigmoid<num_t>(mid);
-    } else if (type == "IsTrapezoid") {
-        shape.erase(0, shape.find(delimiter) + delimiter.length());
-        double min = atof(shape.substr(0, shape.find(delimiter)).c_str());
-        shape.erase(0, shape.find(delimiter) + delimiter.length());
-        double midleft = atof(shape.substr(0, shape.find(delimiter)).c_str());
-        shape.erase(0, shape.find(delimiter) + delimiter.length());
-        double midright = atof(shape.substr(0, shape.find(delimiter)).c_str());
-        shape.erase(0, shape.find(delimiter) + delimiter.length());
-        double max = atof(shape.substr(0, shape.find(delimiter)).c_str());
-        return new fuzzy::IsTrapezoid<num_t>(min, midleft, midright, max);
-    } else if (type == "IsTrapezoidLeft") {
-        shape.erase(0, shape.find(delimiter) + delimiter.length());
-        double min = atof(shape.substr(0, shape.find(delimiter)).c_str());
-        shape.erase(0, shape.find(delimiter) + delimiter.length());
-        double midleft = atof(shape.substr(0, shape.find(delimiter)).c_str());
-        return new fuzzy::IsTrapezoidLeft<num_t>(min, midleft);
-    } else if (type == "IsTrapezoidRight") {
-        shape.erase(0, shape.find(delimiter) + delimiter.length());
-        double midright = atof(shape.substr(0, shape.find(delimiter)).c_str());
-        shape.erase(0, shape.find(delimiter) + delimiter.length());
-        double max = atof(shape.substr(0, shape.find(delimiter)).c_str());
-        return new fuzzy::IsTrapezoidRight<num_t>(midright, max);
-    } else if (type == "IsTriangle") {
-        shape.erase(0, shape.find(delimiter) + delimiter.length());
-        double min = atof(shape.substr(0, shape.find(delimiter)).c_str());
-        shape.erase(0, shape.find(delimiter) + delimiter.length());
-        double mid = atof(shape.substr(0, shape.find(delimiter)).c_str());
-        shape.erase(0, shape.find(delimiter) + delimiter.length());
-        double max = atof(shape.substr(0, shape.find(delimiter)).c_str());
-        return new fuzzy::IsTriangle<num_t>(min, mid, max);
-    }
-    return NULL;
-}
-
 int main(int argc, char* argv[])
 {
     core::FuzzyFactory<num_t> f(&notMinus1, &andMin, &orMax, &thenMin, &aggMax, &opDefuzz);
@@ -420,9 +290,9 @@ int main(int argc, char* argv[])
     testIsSigmoid(&factory);
     testIsTriangle(&factory);
 
-    testCogDefuzz(&f);
-
     sugeno(&factory);
+
+    testCogDefuzz(&f);
 
     return 0;
 }

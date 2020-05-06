@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_NOTMINUS1_H
 #define FUZZY_NOTMINUS1_H
 

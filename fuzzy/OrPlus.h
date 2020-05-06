@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_ORPLUS_H
 #define FUZZY_ORPLUS_H
 

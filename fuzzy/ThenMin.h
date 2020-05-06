@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_THENMIN_H
 #define FUZZY_THENMIN_H
 

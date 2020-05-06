@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_ISSIGMOID_H
 #define FUZZY_ISSIGMOID_H
 #include <cmath>

@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_VALUEMODEL_H
 #define FUZZY_VALUEMODEL_H
 
@@ -10,9 +9,7 @@ template <class T>
 class ValueModel : public Expression<T> {
 public:
     ValueModel();
-
     ValueModel(const T&);
-
     virtual ~ValueModel() {};
 
     T evaluate() const;

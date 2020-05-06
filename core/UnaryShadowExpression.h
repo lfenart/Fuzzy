@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_UNARYSHADOWEXPRESSION_H
 #define FUZZY_UNARYSHADOWEXPRESSION_H
 
@@ -8,9 +7,6 @@ namespace core {
 template <class T>
 class UnaryShadowExpression : public UnaryExpression<T> {
 
-private:
-    UnaryExpression<T>* target;
-
 public:
     UnaryShadowExpression(UnaryExpression<T>*);
 
@@ -19,6 +15,9 @@ public:
     UnaryExpression<T>* getTarget() const;
 
     void setTarget(UnaryExpression<T>*);
+
+private:
+    UnaryExpression<T>* target;
 };
 
 template <class T>

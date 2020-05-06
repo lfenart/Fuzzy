@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_SUGENOTHEN_H
 #define FUZZY_SUGENOTHEN_H
 

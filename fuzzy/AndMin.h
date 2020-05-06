@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_ANDMIN_H
 #define FUZZY_ANDMIN_H
 
@@ -8,7 +7,6 @@
 namespace fuzzy {
 template <typename T>
 class AndMin : public And<T> {
-
 public:
     T evaluate(core::Expression<T>* left, core::Expression<T>* right) const override;
 };

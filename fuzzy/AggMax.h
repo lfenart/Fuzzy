@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_AGGMAX_H
 #define FUZZY_AGGMAX_H
 

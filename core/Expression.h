@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_EXPRESSION_H
 #define FUZZY_EXPRESSION_H
 

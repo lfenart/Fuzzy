@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_BINARYSHADOWEXPRESSION_H
 #define FUZZY_BINARYSHADOWEXPRESSION_H
 
@@ -11,7 +10,6 @@ template <class T>
 class BinaryShadowExpression : public BinaryExpression<T> {
 public:
     BinaryShadowExpression(BinaryExpression<T>* _target);
-
     virtual ~BinaryShadowExpression() {};
 
     T evaluate(Expression<T>* left, Expression<T>* right) const;

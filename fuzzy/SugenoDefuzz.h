@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_SUGENODEFUZZ_H
 #define FUZZY_SUGENODEFUZZ_H
 
@@ -22,9 +21,9 @@ T SugenoDefuzz<T>::evaluate(std::vector<core::Expression<T>*> operands) const
     T num(0);
     T denum(0);
     for (typename std::vector<core::Expression<T>*>::iterator it = operands.begin(); it != operands.end(); it++) {
-        core::BinaryExpressionModel<T>* op = (core::BinaryExpressionModel<T>*) *it;
-        core::BinaryShadowExpression<T>* shadow = (core::BinaryShadowExpression<T>*) op->getOp();
-        SugenoThen<T>* then = (SugenoThen<T>*) shadow->getTarget();
+        core::BinaryExpressionModel<T>* op = (core::BinaryExpressionModel<T>*)*it;
+        core::BinaryShadowExpression<T>* shadow = (core::BinaryShadowExpression<T>*)op->getOp();
+        SugenoThen<T>* then = (SugenoThen<T>*)shadow->getTarget();
         T value = op->evaluate();
         T premise = then->premiseValue();
         num += value * premise;

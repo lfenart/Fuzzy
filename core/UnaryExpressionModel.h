@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_UNARYEXPRESSIONMODEL_H
 #define FUZZY_UNARYEXPRESSIONMODEL_H
 
@@ -10,11 +9,9 @@ template <class T>
 class UnaryExpressionModel : public Expression<T>, public UnaryExpression<T> {
 public:
     UnaryExpressionModel(UnaryExpression<T>*, Expression<T>*);
-
     virtual ~UnaryExpressionModel() {};
 
     T evaluate() const;
-
     T evaluate(Expression<T>*) const;
 
 private:

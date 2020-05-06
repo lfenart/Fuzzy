@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_ISGAUSSIAN_H
 #define FUZZY_ISGAUSSIAN_H
 

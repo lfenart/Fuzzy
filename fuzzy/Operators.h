@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_OPERATORS_H
 #define FUZZY_OPERATORS_H
 

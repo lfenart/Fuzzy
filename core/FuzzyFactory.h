@@ -1,4 +1,3 @@
-
 #include "../fuzzy/MamdaniDefuzz.h"
 
 #ifndef FUZZY_FUZZYFACTORY_H
@@ -16,36 +15,23 @@ namespace core {
 template <class T>
 class FuzzyFactory : public ExpressionFactory<T> {
 public:
-    FuzzyFactory( fuzzy::Not<T>*, fuzzy::And<T>*, fuzzy::Or<T>*, fuzzy::Then<T>*, fuzzy::Agg<T>*, fuzzy::Defuzz<T>*);
-
+    FuzzyFactory(fuzzy::Not<T>*, fuzzy::And<T>*, fuzzy::Or<T>*, fuzzy::Then<T>*, fuzzy::Agg<T>*, fuzzy::Defuzz<T>*);
     virtual ~FuzzyFactory() {};
 
     Expression<T>* newAnd(Expression<T>*, Expression<T>*);
-
     Expression<T>* newOr(Expression<T>*, Expression<T>*);
-
     Expression<T>* newThen(Expression<T>*, Expression<T>*);
-
     Expression<T>* newAgg(Expression<T>*, Expression<T>*);
-
     Expression<T>* newNot(Expression<T>*);
-
     Expression<T>* newIs(fuzzy::Is<T>*, Expression<T>*);
-
     Expression<T>* newDefuzz(Expression<T>*, Expression<T>*, const T&, const T&, const T&);
 
     void changeAnd(fuzzy::And<T>*);
-
     void changeOr(fuzzy::Or<T>*);
-
     void changeThen(fuzzy::Then<T>*);
-
     void changeAgg(fuzzy::Agg<T>*);
-
     void changeNot(fuzzy::Not<T>*);
-
     void changeDefuzz(fuzzy::MamdaniDefuzz<T>*);
-
 
 private:
     BinaryShadowExpression<T> andShadow;
@@ -103,7 +89,7 @@ Expression<T>* FuzzyFactory<T>::newIs(fuzzy::Is<T>* anIs, Expression<T>* express
     return this->newUnary(anIs, expression);
 }
 
-template<typename T>
+template <typename T>
 Expression<T>* FuzzyFactory<T>::newDefuzz(Expression<T>* l, Expression<T>* r, const T& min, const T& max, const T& step)
 {
     return this->newBinary(&mamdaniShadow, l, r);

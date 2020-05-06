@@ -1,4 +1,3 @@
-
 #ifndef FUZZY_ORMAX_H
 #define FUZZY_ORMAX_H
 
