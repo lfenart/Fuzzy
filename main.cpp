@@ -5,6 +5,8 @@
 #include "fuzzy/AndMult.h"
 #include "fuzzy/CogDefuzz.h"
 #include "fuzzy/IsGaussian.h"
+#include "fuzzy/IsSigmoid.h"
+#include "fuzzy/IsTrapezoid.h"
 #include "fuzzy/IsTrapezoidLeft.h"
 #include "fuzzy/IsTrapezoidRight.h"
 #include "fuzzy/IsTriangle.h"
@@ -62,7 +64,13 @@ int main(int argc, char** argv)
         } else if (strcmp(argv[i], "IsTrapezoidRight") == 0) {
             iss.push_back(new fuzzy::IsTrapezoidRight<num_t>(strtod(argv[i + 1], NULL), strtod(argv[i + 2], NULL)));
             i += 3;
-        } else if (strcmp(argv[i], "None") == 0) {
+        } else if (strcmp(argv[i], "IsTrapezoid") == 0) {
+            iss.push_back(new fuzzy::IsTrapezoid<num_t>(strtod(argv[i + 1], NULL), strtod(argv[i + 2], NULL), strtod(argv[i + 3], NULL), strtod(argv[i + 4], NULL)));
+            i += 5;
+        }else if (strcmp(argv[i], "IsSigmoid") == 0) {
+            iss.push_back(new fuzzy::IsSigmoid<num_t>(strtod(argv[i + 1], NULL)));
+            i += 2;
+        }  else if (strcmp(argv[i], "None") == 0) {
             iss.push_back(NULL);
             i += 1;
         } else {
