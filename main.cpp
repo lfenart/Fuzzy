@@ -33,6 +33,15 @@ fuzzy::AggPlus<num_t> aggPlus;
 fuzzy::NotMinus1<num_t> notMinus1;
 fuzzy::CogDefuzz<num_t> opDefuzz;
 
+void freeIss(std::vector<fuzzy::Is<num_t>*> iss)
+{
+    for (std::vector<fuzzy::Is<num_t>*>::iterator it = iss.begin(); it != iss.end(); it++) {
+        if (*it != NULL) {
+            delete *it;
+        }
+    }
+}
+
 int main(int argc, char** argv)
 {
     core::FuzzyFactory<num_t> f(&notMinus1, &andMin, &orMax, &thenMin, &aggMax, &opDefuzz);
@@ -75,6 +84,7 @@ int main(int argc, char** argv)
             i += 1;
         } else {
             std::cout << "Error" << std::endl;
+            freeIss(iss);
             return 1;
         }
     }
@@ -136,5 +146,6 @@ int main(int argc, char** argv)
             f.newIs(iss[8], &tip)));
     core::Expression<num_t>* system = f.newDefuzz(&tip, r, 0, 25, 1);
     std::cout << "tips->" << system->evaluate() << std::endl;
+    freeIss(iss);
     return 0;
 }
